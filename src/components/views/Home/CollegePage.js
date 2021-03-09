@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -7,6 +7,8 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Annouuncement from './Announcement'
 import CourseList from './CourseList'
+import { useQuery } from '@apollo/client'
+import { ALL_COURSE } from '../../../graphql/course'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -35,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
 const CollegePage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(10)
+  const courseResult = useQuery(ALL_COURSE)
 
   const handleChange = (event) => {
     setOrder(event.target.value)
   }
-
+  
   return (
     <>
       <Typography className={classes.title} gutterBottom>
@@ -64,7 +67,7 @@ const CollegePage = () => {
           </FormControl>
         </div>
       </Box>
-      <CourseList />
+      <CourseList loading={courseResult.loading} courses={courseResult.data.courses} />
     </>
   )
 }

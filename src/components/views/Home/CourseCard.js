@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CourseCard = () => {
+const CourseCard = ({ course }) => {
   const classes = useStyles()
 
   return (
@@ -32,10 +32,10 @@ const CourseCard = () => {
         />
         <CardContent>
           <Typography gutterBottom>
-            编译原理
+            {course.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            论文
+            {course.teacher.username}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CourseList from './CourseList'
-
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import { useQuery } from '@apollo/client'
+import { ALL_COURSE } from '../../../graphql/course'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -34,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const UserPage = () => {
   const classes = useStyles()
-
   const [order, setOrder] = useState(20)
+  const courses = useQuery(ALL_COURSE)
 
   const handleChange = (event) => {
     setOrder(event.target.value)
@@ -62,7 +63,7 @@ const UserPage = () => {
           </FormControl>
         </div>
       </Box>
-      <CourseList />
+      <CourseList loading={courses.loading} courses={courses.data.courses} />
     </>
   )
 }

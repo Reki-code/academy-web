@@ -15,17 +15,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CourseList = () => {
+const CourseList = ({ loading, courses }) => {
   const classes = useStyles()
 
+  if (loading) return <div>loading</div>
   return (
     <List>
-      <ListItem className={classes.listItem}>
-        <CourseCard />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <CourseCard />
-      </ListItem>
+      {courses.map(course => (
+        <ListItem key={course.id} className={classes.listItem}>
+          <CourseCard course={course} />
+        </ListItem>
+      ))}
     </List>
   )
 }
