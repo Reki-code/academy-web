@@ -3,24 +3,8 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import CollegePage from './CollegePage'
 import UserPage from './UserPage'
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-          <div>{children}</div>
-      )}
-    </div>
-  )
-}
+import TabPanel from '../../hocs/TabPanel'
+import Container from '@material-ui/core/Container'
 
 const Home = () => {
   const [value, setValue] = useState(1)
@@ -30,7 +14,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <Container>
       <>
         <Tabs value={value}
           onChange={handleChange}
@@ -47,7 +31,7 @@ const Home = () => {
       <TabPanel value={value} index={1}>
         <UserPage />
       </TabPanel>
-    </>
+    </Container>
   )
 }
 

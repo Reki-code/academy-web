@@ -1,12 +1,9 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
-import Home from './components/views/Home/Home'
+import Main from './components/views/Main/Main'
 
 const App = () => {
   return (
-    <Container>
-      <Home />
-    </Container>
+    <Main />
   )
 }
 

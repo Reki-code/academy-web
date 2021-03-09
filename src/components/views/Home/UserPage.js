@@ -42,7 +42,6 @@ const UserPage = () => {
     setOrder(event.target.value)
   }
 
-  console.log(courseResult)
   return (
     <>
       <Box className={classes.order}>
