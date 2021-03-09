@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CourseList = ({ loading, courses }) => {
+const CourseList = ({ courses }) => {
   const classes = useStyles()
 
-  if (loading) return <div>loading</div>
   return (
     <List>
       {courses.map(course => (

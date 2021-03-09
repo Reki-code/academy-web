@@ -42,7 +42,7 @@ const CollegePage = () => {
   const handleChange = (event) => {
     setOrder(event.target.value)
   }
-  
+
   return (
     <>
       <Typography className={classes.title} gutterBottom>
@@ -67,7 +67,10 @@ const CollegePage = () => {
           </FormControl>
         </div>
       </Box>
-      <CourseList loading={courseResult.loading} courses={courseResult.data.courses} />
+      {courseResult.loading
+        ? <div>Loading</div>
+        : <CourseList courses={courseResult.data.courses} />
+      }
     </>
   )
 }

@@ -36,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(20)
-  const courses = useQuery(ALL_COURSE)
+  const courseResult = useQuery(ALL_COURSE)
 
   const handleChange = (event) => {
     setOrder(event.target.value)
   }
 
+  console.log(courseResult)
   return (
     <>
       <Box className={classes.order}>
@@ -63,7 +64,10 @@ const UserPage = () => {
           </FormControl>
         </div>
       </Box>
-      <CourseList loading={courses.loading} courses={courses.data.courses} />
+      {courseResult.loading
+        ? <div>Loading</div>
+        : <CourseList courses={courseResult.data.courses} />
+      }
     </>
   )
 }
