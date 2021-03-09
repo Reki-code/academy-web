@@ -7,9 +7,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.typography.pxToRem(10),
-  },
   media: {
     height: 140
   },
@@ -26,7 +23,7 @@ const CourseCard = () => {
   const classes = useStyles()
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardActionArea>
         <CardMedia
           className={classes.media}
