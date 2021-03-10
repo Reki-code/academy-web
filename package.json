@@ -13,10 +13,12 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "@mui-treasury/components": "^1.10.1",
     "apollo-link-context": "^1.0.20",
     "clsx": "latest",
     "graphql": "^15.5.0",
     "react": "latest",
+    "react-chat-elements": "^10.14.0",
     "react-dom": "latest",
     "react-router-dom": "^5.2.0",
     "react-scripts": "latest"

@@ -4,11 +4,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import HomeIcon from '@material-ui/icons/Home'
-import PhoneIcon from '@material-ui/icons/Phone'
+import SmsIcon from '@material-ui/icons/Sms'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import PersonPinIcon from '@material-ui/icons/PersonPin'
 import TabPanel from '../../hocs/TabPanel'
 import Home from '../Home/Home'
+import ChatList from '../ChatList/ChatList'
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +40,7 @@ export default function IconLabelTabs() {
           textColor='primary'
         >
           <Tab icon={<HomeIcon />} label='主页' />
-          <Tab icon={<PhoneIcon />} label="RECENTS" />
+          <Tab icon={<SmsIcon />} label="私信" />
           <Tab icon={<FavoriteIcon />} label="FAVORITES" />
           <Tab icon={<PersonPinIcon />} label="NEARBY" />
         </Tabs>
@@ -48,7 +49,7 @@ export default function IconLabelTabs() {
         <Home />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        itt
+        <ChatList />
       </TabPanel>
     </>
   )
