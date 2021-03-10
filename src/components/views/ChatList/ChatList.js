@@ -1,10 +1,17 @@
 import 'react-chat-elements/dist/main.css'
 import { ChatList as CeChatList } from 'react-chat-elements'
+import { useRouteMatch, useHistory } from 'react-router-dom'
 
 const ChatList = () => {
+  const match = useRouteMatch()
+  const history = useHistory()
+  const handleClick = (chat) => {
+    console.log('chat', chat)
+    history.push(`${match.path}/${chat.id}`)
+  }
   return (
     <CeChatList
-      onClick={(o) => console.log('click', o)}
+      onClick={handleClick}
       className='chat-list'
       dataSource={[
         {
