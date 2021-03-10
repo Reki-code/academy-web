@@ -6,13 +6,18 @@ import App from './App'
 import theme from './theme'
 import { ApolloProvider } from '@apollo/client'
 import client from './graphql/client'
+import {
+  BrowserRouter as Router,
+} from 'react-router-dom'
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <ApolloProvider client={client}>
-      <CssBaseline />
-      <App />
+      <Router>
+        <CssBaseline />
+        <App />
+      </Router>
     </ApolloProvider>
   </ThemeProvider>,
   document.querySelector('#root'),
