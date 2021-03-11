@@ -7,7 +7,7 @@ export const ALL_COURSE = gql`
     title
     teacher {
       id
-      username
+      displayName
     }
   }
 }

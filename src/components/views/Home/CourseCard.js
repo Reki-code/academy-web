@@ -42,7 +42,7 @@ const CourseCard = ({ course }) => {
             {course.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {course.teacher.username}
+            {course.teacher.displayName}
           </Typography>
         </CardContent>
       </CardActionArea>
