@@ -5,6 +5,7 @@ import Home from '../Home/Home'
 import ChatList from '../ChatList/ChatList'
 import Chat from '../Chat/Chat'
 import Course from '../Course/Course'
+import Question from '../Question/Question'
 import Set from '../Set/Set'
 
 const Main = () => {
@@ -16,6 +17,7 @@ const Main = () => {
         <NavRoute exact path='/chat' component={ChatList} />
         <Route exact path={'/chat/:conversationId'} component={Chat} />
         <Route path={'/course/:courseId'} component={Course} />
+        <Route path={'/question/:questionId'} component={Question} />
         <Route exact path={'/set/:token'} component={Set} />
       </Switch>
     </>
