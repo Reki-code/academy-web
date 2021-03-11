@@ -18,3 +18,42 @@ export const ALL_QESTIONS = gql`
     }
   }
 `
+
+export const QUESTION = gql`
+  query ($questionId: ID!) {
+    me {
+      id
+    }
+    post(id: $questionId) {
+      id
+      title
+      content
+      author {
+        displayName
+      }
+      createdAt
+      vote
+      votes {
+        voter {
+          id
+        }
+        vote
+      }
+      answers {
+        id
+        vote
+        content
+        author {
+          displayName
+        }
+        createdAt
+        comments {
+          content
+          author {
+            displayName
+          }
+        }
+      }
+    }
+  }
+`

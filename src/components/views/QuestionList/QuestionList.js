@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
@@ -45,10 +45,10 @@ const QuestionList = () => {
       {
         questions
           .map(question =>
-            <>
-              <QuestionItem key={question.id} question={question} />
+            <Fragment key={question.id}>
+              <QuestionItem question={question} />
               <Divider />
-            </>
+            </Fragment>
           )
       }
       <Fab className={classes.fab} variant='extended'>
