@@ -17,6 +17,7 @@
     "apollo-link-context": "^1.0.20",
     "clsx": "latest",
     "graphql": "^15.5.0",
+    "ramda": "^0.27.1",
     "react": "latest",
     "react-chat-elements": "^10.14.0",
     "react-dom": "latest",

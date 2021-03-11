@@ -3,6 +3,7 @@ import { useParams, useRouteMatch, Switch, Route } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { COURSE_INFO } from '../../../graphql/course'
 import CourseInfo from './CourseInfo'
+import Overview from './Overview/Overview'
 import QuestionList from '../QuestionList/QuestionList'
 
 const Course = () => {
@@ -22,7 +23,7 @@ const Course = () => {
             : <CourseInfo course={courseInfo.data.course} />
       }
       <Switch>
-        <Route exact path={match.path}>main page</Route>
+        <Route exact path={match.path} component={Overview} />
         <Route path={`${match.path}/question`} component={QuestionList} />
       </Switch>
     </>
