@@ -6,6 +6,7 @@ export const ALL_COURSE = gql`
     id
     title
     teacher {
+      id
       username
     }
   }
@@ -18,6 +19,7 @@ export const COURSE_INFO = gql`
       id
       title
       teacher {
+        id
         displayName
       }
     }
