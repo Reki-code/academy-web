@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -21,9 +22,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CourseCard = ({ course }) => {
   const classes = useStyles()
+  const history = useHistory()
+  const match = useRouteMatch()
+  const handleClick = () => {
+    console.log('match', match)
+    history.push(`course/${course.id}`)
+  }
 
   return (
-    <Card>
+    <Card onClick={handleClick}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
