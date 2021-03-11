@@ -11,3 +11,14 @@ export const ALL_COURSE = gql`
   }
 }
 `
+
+export const COURSE_INFO = gql`
+  query ($courseId: ID!) {
+    course(id: $courseId) {
+      title
+      teacher {
+        displayName
+      }
+    }
+  }
+`
