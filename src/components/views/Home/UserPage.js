@@ -65,7 +65,9 @@ const UserPage = () => {
       </Box>
       {courseResult.loading
         ? <div>Loading</div>
-        : <CourseList courses={courseResult.data.courses} />
+        : courseResult.error 
+          ? <div> {courseResult.error.toString()} </div>
+          : <CourseList courses={courseResult.data.courses} />
       }
     </>
   )

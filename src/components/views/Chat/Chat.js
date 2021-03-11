@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useParams } from 'react-router-dom'
+import { useQuery, useMutation } from '@apollo/client'
+import { MESSAGES, SEND_MESSAGE, CHATS } from '../../../graphql/chat'
 import ChatMessages from './ChatMessages'
 import Input from './Input'
 
@@ -22,89 +25,74 @@ const useStyles = makeStyles((theme) => ({
 const AVATAR =
   'https://i.pinimg.com/originals/0a/dd/87/0add874e1ea0676c4365b2dd7ddd32e3.jpg'
 
-const chats = [
-  { sender: { id: '1' }, content: 'this is a message1' },
-  { sender: { id: '1' }, content: 'this is a message2' },
-  { sender: { id: '1' }, content: 'this is a message3' },
-  { sender: { id: '1' }, content: 'this is a message4' },
-  { sender: { id: '1' }, content: 'this is a message5' },
-  { sender: { id: '1' }, content: 'this is a message6' },
-  { sender: { id: '2' }, content: 'this is a message7' },
-  { sender: { id: '2' }, content: 'this is a message8' },
-  { sender: { id: '1' }, content: 'this is a message9' },
-  { sender: { id: '1' }, content: 'this is a message10' },
-  { sender: { id: '1' }, content: 'this is a message11' },
-  { sender: { id: '1' }, content: 'this is a message1' },
-  { sender: { id: '1' }, content: 'this is a message2' },
-  { sender: { id: '1' }, content: 'this is a message3' },
-  { sender: { id: '1' }, content: 'this is a message4' },
-  { sender: { id: '1' }, content: 'this is a message5' },
-  { sender: { id: '1' }, content: 'this is a message6' },
-  { sender: { id: '2' }, content: 'this is a message7' },
-  { sender: { id: '2' }, content: 'this is a message8' },
-  { sender: { id: '1' }, content: 'this is a message9' },
-  { sender: { id: '1' }, content: 'this is a message10' },
-  { sender: { id: '1' }, content: 'this is a message11' },
-]
-
-const me = {
-  id: '2'
-}
-
-const init = { lastSender: 'hh', chatMessages: [] }
-
-const reducer = (groupedMessages, message) => {
-  if (message.sender.id === groupedMessages.lastSender) { // same sender
-    groupedMessages.chatMessages
-  } else { // different sender
-
-  }
-}
 
 const Chat = () => {
   const classes = useStyles()
+  const { conversationId } = useParams()
   const messagesEndRef = useRef(null)
+  const messages = useQuery(MESSAGES, {
+    variables: { conversationId }
+  })
+  const [sendMessage] = useMutation(SEND_MESSAGE, {
+    onError: (error) => {
+      console.error(error)
+    },
+    refetchQueries: [{ query: MESSAGES, variables: { conversationId } }, { query: CHATS }]
+    // update(store, response) {
+    //   const dataInStore = store.readQuery({ query: MESSAGES, variables: { conversationId }})
+    //   console.log('cacahe', store)
+    //   store.writeQuery({
+    //     query: MESSAGES,
+    //     variables: { conversationId },
+    //     data: {
+    //       ...dataInStore,
+    //       [`conversation({'id':${conversationId})`]: 
+    //         [...dataInStore[`conversation({'id':${conversationId})`], response.data.message ],
+    //     }
+    //   })
+    // },
+  })
   const [input, setInput] = useState('')
   const handleInput = (event) => {
     setInput(event.target.value)
   }
-  const handleSend = () => {
-    console.log(input)
-    setInput('')
-  }
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  })
-
+  }, [])
+  if (messages.loading) {
+    return <div>loading</div>
+  }
+  if (messages.error) {
+    return <div>error</div>
+  }
+  const chats = messages.data.conversation.messages
+  const myId = messages.data.me.id
+  const handleSend = () => {
+    console.log(input)
+    sendMessage({
+      variables: {
+        conversationId,
+        senderId: myId,
+        content: input,
+      }
+    })
+    setInput('')
+  }
   return (
     <div className={classes.root}>
       <div className={classes.messages}>
         {
           chats.map(chat => (
             <ChatMessages
-              side={me.id === chat.sender.id ? 'right' : 'left'}
+              key={chat.id}
+              side={chat.sender.id === myId ? 'right' : 'left'}
+              avatar={AVATAR}
               messages={[
                 chat.content
               ]}
             />
           ))
         }
-        {/* <ChatMessages
-          avatar={AVATAR}
-          messages={[
-            'Hi Jenny, How r u today?',
-            'Did you train yesterday',
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.',
-          ]}
-        />
-        <ChatMessages
-          side={'right'}
-          messages={[
-            "Great! What's about you?",
-            'Of course I did. Speaking of which check this out',
-          ]}
-        />
-        <ChatMessages avatar={AVATAR} messages={['Im good.', 'See u later.']} /> */}
         <div ref={messagesEndRef} />
       </div>
       <Input value={input} className={classes.inputBar} handleInput={handleInput} handleSend={handleSend} />
