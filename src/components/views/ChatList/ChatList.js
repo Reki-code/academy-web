@@ -1,15 +1,24 @@
+import React from 'react'
 import 'react-chat-elements/dist/main.css'
-import { ChatList as CeChatList } from 'react-chat-elements'
-import { useRouteMatch, useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
 import { useQuery } from '@apollo/client'
 import { CHATS } from '../../../graphql/chat'
+import ChatListItem from './ChatListItem'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
+  inline: {
+    display: 'inline',
+  },
+}))
 
 const ChatList = () => {
-  const match = useRouteMatch()
-  const history = useHistory()
-  const handleClick = (chat) => {
-    history.push(`${match.path}/${chat.id}`)
-  }
+  const classes = useStyles()
+
   const chatList = useQuery(CHATS)
   if (chatList.loading) {
     return <div>Loading</div>
@@ -21,20 +30,16 @@ const ChatList = () => {
   const myId = chatList.data.me.id
 
   return (
-    <CeChatList
-      onClick={handleClick}
-      className='chat-list'
-      dataSource={
-        conversations.map(conversation => {
-          return {
-            id: conversation.id,
-            avatar: 'https://avatars.githubusercontent.com/u/32997723?s=460&u=ebb97e29c0bc717c30aa61b99f75520bebe73aa2&v=4',
-            title: conversation.participants.filter(p => p.id !== myId)[0].displayName,
-            subtitle: conversation.latestMessage.content,
-            date: conversation.latestMessage.createdAt,
-          }
-        })
-      } />
+    <>
+      <List className={classes.root}>
+        {conversations.map(conversation => (
+          <ChatListItem
+            conversation={conversation}
+            myId={myId}
+            key={conversation.id}
+          />))}
+      </List>
+    </>
   )
 }
 
