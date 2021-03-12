@@ -22,7 +22,8 @@
     "react-chat-elements": "^10.14.0",
     "react-dom": "latest",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "timeago.js": "^4.0.2"
   },
   "browserslist": {
     "production": [
