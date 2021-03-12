@@ -27,7 +27,6 @@ const ChatListItem = ({ conversation, myId }) => {
     history.push(`${match.path}/${conversation.id}`)
   }
 
-  console.log(conversation.latestMessage)
   return (
     <>
       <ListItem alignItems='flex-start' onClick={handleClick}>
