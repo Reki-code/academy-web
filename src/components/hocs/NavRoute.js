@@ -9,19 +9,7 @@ import SmsIcon from '@material-ui/icons/Sms'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import PersonPinIcon from '@material-ui/icons/PersonPin'
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-    position: 'fixed',
-    top: 'auto',
-    bottom: 0,
-    width: '100%',
-    zIndex: 100,
-  },
-})
-
 const Nav = () => {
-  const classes = useStyles()
   const location = useLocation()
   const history = useHistory()
 
@@ -30,7 +18,7 @@ const Nav = () => {
   }
 
   return (
-    <Paper square className={classes.root} px={0}>
+    <Paper square>
       <Tabs
         value={location.pathname}
         onChange={handleChange}
@@ -47,13 +35,33 @@ const Nav = () => {
   )
 }
 
-const NavRoute = ({ exact, path, component: Component }) => (
-  <Route exact={exact} path={path} render={(props) => (
-    <div>
-      <Nav />
-      <Component {...props} />
-    </div>
-  )} />
-)
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+  },
+  content: {
+    flexGrow: 2,
+    overflowY: 'auto',
+  },
+})
+
+const NavRoute = ({ exact, path, component: Component }) => {
+  const classes = useStyles()
+
+  return (
+    <Route exact={exact} path={path} render={(props) => (
+      <div className={classes.root}>
+        <div className={classes.content}>
+          <Component {...props} />
+        </div>
+        <div>
+          <Nav />
+        </div>
+      </div>
+    )} />
+  )
+}
 
 export default NavRoute
