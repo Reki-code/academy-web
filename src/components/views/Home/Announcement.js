@@ -4,6 +4,8 @@ import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import Typography from '@material-ui/core/Typography'
+import { useQuery } from '@apollo/client'
+import { ANNOUNCEMENTS } from '../../../graphql/announcement'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,38 +31,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const announcementInfo = [
-  {
-    id: 'abc',
-    title: '关于网络学堂微信版的使用说明',
-    content: [
-      '为方便各位老师、助教使用在线学堂微信版创建和使用课程群，我们撰写了相应的使用说明',
-      '您在使用2018版网络学堂过程中，有任何问题，请咨询：',
-      '电话：62788122'
-    ]
-  }, {
-    id: 'bbc',
-    title: '关于网络学堂微信版的使用说明',
-    content: [
-      '为方便各位老师、助教使用在线学堂微信版创建和使用课程群，我们撰写了相应的使用说明',
-      '您在使用2018版网络学堂过程中，有任何问题，请咨询：',
-      '电话：62788122'
-    ]
-  }
-]
-
 const Announcement = () => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState()
+  const announcementInfo = useQuery(ANNOUNCEMENTS)
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   }
 
+  if (announcementInfo.loading) {
+    return <div>Loading</div>
+  }
+  const announcements = announcementInfo.data.announcements
+
   return <div className={classes.root}>
     {
-      announcementInfo.map((announcement) => {
+      announcements.map((announcement) => {
         const id = announcement.id
+        const date = new Date(announcement.createdAt)
+        const shortOptions = { month: 'long', day: 'numeric' }
+        const longOptions = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }
         return (
           <Accordion square expanded={expanded === id} onChange={handleChange(id)} key={id}>
             <AccordionSummary>
@@ -69,16 +60,13 @@ const Announcement = () => {
               </div>
               <div className={classes.column2}>
                 <Typography className={classes.secondaryHeading}>
-                  2月8日
+                  {expanded === id ? '' : new Intl.DateTimeFormat('zh-CN', shortOptions).format(date)}
                 </Typography>
               </div>
             </AccordionSummary>
             <AccordionDetails className={classes.details}>
-              {announcement.content.map(cont => (
-                <p>
-                  {cont}
-                </p>
-              ))}
+              <div>{new Intl.DateTimeFormat('zh-CN', longOptions).format(date)}</div>
+              <div>{announcement.content}</div>
             </AccordionDetails>
           </Accordion>
         )
