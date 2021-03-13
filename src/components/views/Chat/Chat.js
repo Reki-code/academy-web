@@ -68,7 +68,6 @@ const Chat = () => {
   const chats = messages.data.conversation.messages
   const myId = messages.data.me.id
   const handleSend = () => {
-    console.log(input)
     sendMessage({
       variables: {
         conversationId,
