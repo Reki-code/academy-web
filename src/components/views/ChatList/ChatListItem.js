@@ -37,7 +37,7 @@ const ChatListItem = ({ conversation, myId }) => {
           primary={
             <div className={classes.flex}>
               <div>{conversation.participants.filter(p => p.id !== myId)[0].displayName}</div>
-              <div>{timeago(conversation.latestMessage.createdAt)}</div>
+              <div>{timeago(conversation.latestMessage?.createdAt)}</div>
             </div>
           }
           secondary={
@@ -48,9 +48,9 @@ const ChatListItem = ({ conversation, myId }) => {
                 className={classes.inline}
                 color='textPrimary'
               >
-                {conversation.latestMessage.sender.id === myId ? '我: ' : ''}
+                {conversation.latestMessage?.sender.id === myId ? '我: ' : ''}
               </Typography>
-              {conversation.latestMessage.content}
+              {conversation.latestMessage?.content}
             </>
           }
         />
