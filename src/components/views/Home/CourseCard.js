@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const CourseCard = ({ course }) => {
   const classes = useStyles()
   const history = useHistory()
-  const match = useRouteMatch()
   const handleClick = () => {
-    console.log('match', match)
     history.push(`course/${course.id}`)
   }
 
