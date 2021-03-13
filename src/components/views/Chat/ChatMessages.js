@@ -77,7 +77,7 @@ const ChatMessages = ({ avatar, messages, side }) => {
       )}
       <Grid item xs={8}>
         {messages.map((msg, i) => (
-          <div className={classes[`${side}Row`]}>
+          <div key={`${messages.id}-${i}`} className={classes[`${side}Row`]}>
             <Typography
               align={'left'}
               className={`${classes.msg} ${classes[side]} ${attachClass(i)}`}
