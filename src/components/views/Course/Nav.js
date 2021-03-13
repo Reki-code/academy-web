@@ -31,7 +31,7 @@ const Nav = () => {
       >
         <Tab value='' label='内容' />
         <Tab value='/question' label='问答' />
-        <Tab value='/f' label="FAVORITES" disabled />
+        <Tab value='/quiz' label='作业' />
         <Tab value='/n' label="NEARBY" disabled />
       </Tabs>
   )
