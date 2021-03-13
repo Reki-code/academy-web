@@ -1,5 +1,4 @@
 import React from 'react'
-import 'react-chat-elements/dist/main.css'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import { useQuery } from '@apollo/client'
