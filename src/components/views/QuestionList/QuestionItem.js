@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
   flex: {
     display: 'flex',
   },
-  summary: {
-
+  block: {
+    display: 'block',
   },
 }))
 
@@ -53,13 +53,13 @@ const QuestionItem = ({ question }) => {
           primary={question.title}
           secondary={
             <>
-              <Typography variant='body2' color='textPrimary'>
+              <Typography variant='body2' color='textPrimary' component='span'>
                 {question.content}
               </Typography>
-              <div>
+              <span className={classes.block}>
                 <span>{question.author.displayName}</span>
                 <span>{longFormat(question.updatedAt)}</span>
-              </div>
+              </span>
             </>
           }
         />

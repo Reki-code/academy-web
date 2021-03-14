@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Divider from '@material-ui/core/Divider'
+import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import AnswerItem from './AnswerItem'
 
@@ -9,14 +9,13 @@ const AnswerList = ({ answers }) => {
       <Typography variant='h5'>
         回答({answers.length})
       </Typography>
-      {
-        answers.map(answer => (
-          <Fragment key={answer.id}>
-            <AnswerItem answer={answer} />
-            <Divider />
-          </Fragment>
-        ))
-      }
+      <List>
+        {
+          answers.map(answer => (
+            <AnswerItem key={answer.id} answer={answer} />
+          ))
+        }
+      </List>
     </>
   )
 }

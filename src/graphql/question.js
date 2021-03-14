@@ -44,6 +44,7 @@ export const QUESTION = gql`
         vote
         content
         author {
+          avatar
           displayName
         }
         createdAt
