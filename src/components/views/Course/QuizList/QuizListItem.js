@@ -25,13 +25,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const QuizListItem = ({ quiz }) => {
+const QuizListItem = ({ quiz = { id: '1'} }) => {
   const classes = useStyles()
   const history = useHistory()
 
   const handleClick = () => {
-    console.log('click quiz')
-    // history.push(`/quiz/${quiz.id}`)
+    history.push(`/quiz/${quiz.id}`)
   }
 
   return (
