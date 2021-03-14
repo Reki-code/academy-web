@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import Typography from '@material-ui/core/Typography'
 import { useQuery } from '@apollo/client'
 import { ANNOUNCEMENTS } from '../../../graphql/announcement'
+import { shortFormat, longFormat } from '../../../utils/timeFormat'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,8 +51,6 @@ const Announcement = () => {
       announcements.map((announcement) => {
         const id = announcement.id
         const date = new Date(announcement.createdAt)
-        const shortOptions = { month: 'long', day: 'numeric' }
-        const longOptions = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }
         return (
           <Accordion square expanded={expanded === id} onChange={handleChange(id)} key={id}>
             <AccordionSummary>
@@ -60,12 +59,12 @@ const Announcement = () => {
               </div>
               <div className={classes.column2}>
                 <Typography className={classes.secondaryHeading}>
-                  {expanded === id ? '' : new Intl.DateTimeFormat('zh-CN', shortOptions).format(date)}
+                  {expanded === id ? '' : shortFormat(date)}
                 </Typography>
               </div>
             </AccordionSummary>
             <AccordionDetails className={classes.details}>
-              <div>{new Intl.DateTimeFormat('zh-CN', longOptions).format(date)}</div>
+              <div>{longFormat(date)}</div>
               <div>{announcement.content}</div>
             </AccordionDetails>
           </Accordion>
