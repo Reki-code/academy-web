@@ -1,17 +1,25 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useParams, useHistory } from 'react-router-dom'
+import ListItem from '@material-ui/core/ListItem'
+import Divider from '@material-ui/core/Divider'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
+import Typography from '@material-ui/core/Typography'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'grid',
-    gridTemplateColumns: '64px 1fr'
+    paddingBottom: 0,
   },
   stats: {
-    display: 'grid',
-    gridTemplateRows: 'repeat(2, 1fr)',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  flex: {
+    display: 'flex',
   },
   summary: {
 
@@ -27,26 +35,37 @@ const QuestionItem = ({ question }) => {
   }
 
   return (
-    <div className={classes.root} onClick={handleClick}>
-      <div className={classes.stats}>
-        <div>
-          <ThumbUpIcon />
-          {question.vote}
-        </div>
-        <div>
-          <QuestionAnswerIcon />
-          {question.answerCount}
-        </div>
-      </div>
-      <div className={classes.summary}>
-        <div>{question.title}</div>
-        <div>{question.content}</div>
-        <div>
-          <span>{question.author.displayName}</span>
-          <span>{new Date(question.updatedAt).toISOString()}</span>
-        </div>
-      </div>
-    </div>
+    <>
+      <ListItem className={classes.root} alignItems='flex-start' onClick={handleClick}>
+        <ListItemAvatar>
+          <div className={classes.stats}>
+            <div className={classes.flex}>
+              <ThumbUpIcon />
+              {question.vote}
+            </div>
+            <div className={classes.flex}>
+              <QuestionAnswerIcon />
+              {question.answerCount}
+            </div>
+          </div>
+        </ListItemAvatar>
+        <ListItemText
+          primary={question.title}
+          secondary={
+            <>
+              <Typography variant='body2' color='textPrimary'>
+                {question.content}
+              </Typography>
+              <div>
+                <span>{question.author.displayName}</span>
+                <span>{new Date(question.updatedAt).toISOString()}</span>
+              </div>
+            </>
+          }
+        />
+      </ListItem>
+      <Divider component='li' />
+    </>
   )
 }
 

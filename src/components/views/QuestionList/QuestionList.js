@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { ALL_QESTIONS } from '../../../graphql/question'
+import List from '@material-ui/core/List'
 import QuestionItem from './QuestionItem'
 import Divider from '@material-ui/core/Divider'
 import Fab from '@material-ui/core/Fab'
@@ -42,15 +43,17 @@ const QuestionList = () => {
   return (
     <div className={classes.root}>
       <div>Question List</div>
-      {
-        questions
-          .map(question =>
-            <Fragment key={question.id}>
-              <QuestionItem question={question} />
-              <Divider />
-            </Fragment>
-          )
-      }
+      <List>
+        {
+          questions
+            .map(question =>
+              <Fragment key={question.id}>
+                <QuestionItem question={question} />
+                <Divider />
+              </Fragment>
+            )
+        }
+      </List>
       <Fab className={classes.fab} variant='extended'>
         <EditIcon className={classes.extendedIcon} />
         提问
