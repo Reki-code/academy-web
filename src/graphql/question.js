@@ -58,3 +58,19 @@ export const QUESTION = gql`
     }
   }
 `
+
+export const ADD_QUESTION = gql`
+  mutation ($courseId: String!, $title: String, $content: String) {
+    courseAddQuestion(input: {
+      courseId: $courseId
+      question: {
+        title: $title
+        content: $content
+      }
+    }) {
+      course {
+        id
+      }
+    }
+  }
+`

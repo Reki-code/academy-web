@@ -16,6 +16,8 @@
     "@mui-treasury/components": "^1.10.1",
     "apollo-link-context": "^1.0.20",
     "clsx": "latest",
+    "formik": "^2.2.6",
+    "formik-material-ui": "^3.0.1",
     "graphql": "^15.5.0",
     "ramda": "^0.27.1",
     "react": "latest",

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
@@ -8,6 +8,7 @@ import QuestionItem from './QuestionItem'
 import Divider from '@material-ui/core/Divider'
 import Fab from '@material-ui/core/Fab'
 import EditIcon from '@material-ui/icons/Edit'
+import NewQuestion from './NewQuestion/NewQuestion'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
 const QuestionList = () => {
   const classes = useStyles()
   const { courseId } = useParams()
+  const [newDialog, setNewDialog] = useState(false)
+  const handleClose = () => {
+    setNewDialog(false)
+  }
   const questionsInfo = useQuery(ALL_QESTIONS, {
     variables: { courseId }
   })
@@ -39,6 +44,9 @@ const QuestionList = () => {
     return <div>Error</div>
   }
   const questions = questionsInfo.data.course.questions
+  const handleNew = () => {
+    setNewDialog(true)
+  }
 
   return (
     <div className={classes.root}>
@@ -54,10 +62,11 @@ const QuestionList = () => {
             )
         }
       </List>
-      <Fab className={classes.fab} variant='extended'>
+      <Fab className={classes.fab} variant='extended' onClick={handleNew}>
         <EditIcon className={classes.extendedIcon} />
         提问
       </Fab>
+      <NewQuestion courseId={courseId} open={newDialog} handleClose={handleClose} />
     </div>
   )
 }
