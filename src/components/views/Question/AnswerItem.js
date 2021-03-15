@@ -5,6 +5,8 @@ import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import CommentIcon from '@material-ui/icons/Comment'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
@@ -29,13 +31,8 @@ const useStyles = makeStyles((theme) => ({
   author: {
     display: 'flex',
   },
-  avatar: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
   stats: {
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'Center',
   }
@@ -48,19 +45,12 @@ const AnswerItem = ({ answer }) => {
     <>
       <ListItem className={classes.root} alignItems="flex-start">
         <ListItemAvatar>
-          <div className={classes.stats}>
-            <ThumbUpOutlinedIcon fontSize='small' />
-            {answer.vote}
-            <ThumbDownOutlinedIcon fontSize='small' />
-          </div>
+          <Avatar src={answer.author.avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={
             <span className={classes.flex}>
-              <span className={classes.author}>
-                <Avatar src={answer.author.avatar} className={classes.avatar} />
-                <span>{answer.author.displayName}</span>
-              </span>
+              <span>{answer.author.displayName}</span>
               <Typography color='textSecondary' component='span' >{timeago(answer.createdAt)}</Typography>
             </span>
           }
@@ -69,6 +59,18 @@ const AnswerItem = ({ answer }) => {
               <Typography color='textPrimary' component='span'>
                 {answer.content}
                 <Divider component='span' />
+                <span className={classes.stats}>
+                  <Button>
+                    <ThumbUpOutlinedIcon fontSize='small' />
+                  </Button>
+                  {answer.vote}
+                  <Button>
+                    <ThumbDownOutlinedIcon fontSize='small' />
+                  </Button>
+                  <Button>
+                    <CommentIcon fontSize='small' />
+                  </Button>
+                </span>
               </Typography>
             </>
           }
