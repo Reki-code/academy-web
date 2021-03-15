@@ -5,24 +5,36 @@ import Container from '@material-ui/core/Container'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from '@material-ui/core/Button'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import StarIcon from '@material-ui/icons/Star'
+import StarOutlineIcon from '@material-ui/icons/StarOutline'
+import RateReviewIcon from '@material-ui/icons/RateReview'
+import Avatar from '@material-ui/core/Avatar'
 import { useQuery } from '@apollo/client'
 import { QUESTION } from '../../../graphql/question'
 import timeago from '../../../utils/timeago'
 import AnswerList from './AnswerList'
 
 const useStyles = makeStyles((theme) => ({
-  question: {
-    display: 'grid',
-    gridTemplateColumns: '32px 1fr'
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  name: {
+    paddingLeft: 16,
   },
   stats: {
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'Center',
-  }
+  },
 }))
 
 const Question = () => {
@@ -44,17 +56,38 @@ const Question = () => {
       <Typography gutterBottom variant='h3' component='h1'>
         {question.title}
       </Typography>
-      <span>提问于: {timeago(question.createdAt)}</span>
-      <span>提问者: {question.author.displayName}</span>
+      <div className={classes.row}>
+        <span className={classes.flex}>
+          <Avatar src={question.author.avatar} component='span' />
+          <Typography className={classes.name} color='textPrimary' component='span' >
+            {question.author.displayName}
+          </Typography>
+        </span>
+        <Typography color='textSecondary' component='span' >{timeago(question.createdAt)}</Typography>
+      </div>
       <Divider />
       <div className={classes.question}>
-        <div className={classes.stats}>
-          <ThumbUpIcon fontSize='small' />
-          { question.vote }
-          <ThumbDownIcon fontSize='small' />
-        </div>
         <div>
           { question.content }
+        </div>
+        <div className={classes.row}>
+          <div className={classes.stats}>
+            <Button>
+              <ThumbUpIcon fontSize='small' />
+            </Button>
+            {question.vote}
+            <Button>
+              <ThumbDownIcon fontSize='small' />
+            </Button>
+            <Button>
+              <RateReviewIcon fontSize='small' />
+            回答
+          </Button>
+          </div>
+          <Button>
+            <StarIcon fontSize='small' />
+            收藏
+          </Button>
         </div>
       </div>
       <Divider />

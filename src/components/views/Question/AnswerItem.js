@@ -69,6 +69,7 @@ const AnswerItem = ({ answer }) => {
                   </Button>
                   <Button>
                     <CommentIcon fontSize='small' />
+                    补充
                   </Button>
                 </span>
               </Typography>
