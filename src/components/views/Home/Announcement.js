@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography'
 import { useQuery } from '@apollo/client'
 import { ANNOUNCEMENTS } from '../../../graphql/announcement'
 import { shortFormat, longFormat } from '../../../utils/timeFormat'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +43,8 @@ const Announcement = () => {
     setExpanded(newExpanded ? panel : false);
   }
 
-  if (announcementInfo.loading) {
-    return <div>Loading</div>
-  }
+  if (announcementInfo.loading) return <Loading />
+  if (announcementInfo.error) return <Error error={announcementInfo.error} />
   const announcements = announcementInfo.data.announcements
 
   return <div className={classes.root}>
