@@ -30,6 +30,7 @@ export const QUESTION = gql`
       content
       author {
         displayName
+        avatar
       }
       createdAt
       vote
@@ -69,6 +70,22 @@ export const ADD_QUESTION = gql`
       }
     }) {
       course {
+        id
+      }
+    }
+  }
+`
+
+export const ADD_ANSWER = gql`
+  mutation ($questionId: String!, $answer: String) {
+    questionAddAnswer(input: {
+      questionId: $questionId
+      answer: $answer
+    }) {
+      question {
+        id
+      }
+      answer {
         id
       }
     }
