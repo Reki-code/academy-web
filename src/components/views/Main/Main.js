@@ -9,6 +9,7 @@ import Question from '../Question/Question'
 import Quiz from '../Quiz/Quiz'
 import Set from '../Set/Set'
 import Me from '../Me/Me'
+import Favorite from '../Favorite/Favorite'
 
 const Main = () => {
 
@@ -18,6 +19,7 @@ const Main = () => {
         <NavRoute exact path='/' component={Home} />
         <NavRoute exact path='/chat' component={ChatList} />
         <Route exact path={'/chat/:conversationId'} component={Chat} />
+        <NavRoute exact path={'/favorite'} component={Favorite} />
         <NavRoute exact path={'/me'} component={Me} />
         <Route path={'/course/:courseId'} component={Course} />
         <Route path={'/question/:questionId'} component={Question} />
