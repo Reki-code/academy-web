@@ -8,6 +8,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import { useHistory } from 'react-router-dom'
+import { shortFormat } from '../../../../utils/timeFormat'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,14 +44,14 @@ const QuizListItem = ({ quiz = { id: '1'} }) => {
           primary={
             <>
               <div className={classes.flex}>
-                <div>第一周测试</div>
+                <div>{quiz.title}</div>
                 <div>60%</div>
               </div>
               <Typography className={classes.weight} align='right' variant='body2'>权重5%</Typography>
               <Divider />
             </>
           }
-          secondary='直到 3月8日'
+          secondary={`截止 ${shortFormat(quiz.dueDate)}`}
         />
       </ListItem>
     </Paper>

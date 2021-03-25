@@ -7,7 +7,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import { ALL_QUIZZES } from '../../../../graphql/quiz'
 import QuizListItem from './QuizListItem'
+import Loading from '../../../common/Loading'
+import Error from '../../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -21,6 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Quiz = () => {
   const classes = useStyles()
+  const { courseId } = useParams()
+  const quizzesInfo = useQuery(ALL_QUIZZES, {
+    variables: { courseId }
+  })
+
+  if (quizzesInfo.loading) return <Loading />
+  if (quizzesInfo.error) return <Error error={quizzesInfo.error} />
+
+  const quizzes = quizzesInfo.data.course.quizzes
 
   return (
     <div>
@@ -28,10 +42,9 @@ const Quiz = () => {
         请在截止日期前提交作业。
       </div>
       <List className={classes.list}>
-        <QuizListItem />
-        <QuizListItem />
-        <QuizListItem />
-        <QuizListItem />
+        {
+          quizzes.map(quiz => <QuizListItem key={quiz.id} quiz={quiz} />)
+        }
       </List>
     </div>
   )
