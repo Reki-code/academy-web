@@ -6,6 +6,7 @@ import CourseInfo from './CourseInfo'
 import Overview from './Overview/Overview'
 import QuestionList from '../QuestionList/QuestionList'
 import QuizList from './QuizList/QuizList'
+import MateList from './MateList/MateList'
 
 const Course = () => {
   const { courseId } = useParams()
@@ -27,6 +28,7 @@ const Course = () => {
         <Route exact path={match.path} component={Overview} />
         <Route path={`${match.path}/question`} component={QuestionList} />
         <Route path={`${match.path}/quiz`} component={QuizList} />
+        <Route path={`${match.path}/mate`} component={MateList} />
       </Switch>
     </>
   )
