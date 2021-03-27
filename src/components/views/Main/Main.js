@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect} from 'react-router-dom'
 import StudentLayout from '../../layout/StudentLayout/StudentLayout'
 import TeacherLayout from '../../layout/TeacherLayout/TeacherLayout'
+import AuthLayout from '../../layout/AuthLayout/AuthLayout'
 import Chat from '../Chat/Chat'
 import Course from '../Course/Course'
 import Question from '../Question/Question'
@@ -28,6 +29,7 @@ const Main = () => {
         </Route>
         <Route path='/student' component={StudentLayout} />
         <Route path='/teacher' component={TeacherLayout} />
+        <Route path='/auth' component={AuthLayout} />
         <Route exact path='/chat/:conversationId' component={Chat} />
         <Route path='/course/:courseId' component={Course} />
         <Route path='/question/:questionId' component={Question} />

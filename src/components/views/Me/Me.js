@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
 const Me = () => {
   const classes = useStyles()
   const meInfo = useQuery(ME)
+  const history = useHistory()
+  const handleLogout = () => {
+    history.push('/auth')
+  }
 
   if (meInfo.loading) return <Loading />
   if (meInfo.error) return <Error error={meInfo.error} />
@@ -61,11 +66,12 @@ const Me = () => {
         </Grid>
       </Paper>
       <div>ME</div>
-      {/* <Button
+      <Button
         className={classes.logout}
+        onClick={handleLogout}
       >
         退出登录
-      </Button> */}
+      </Button>
     </>
   )
 }
