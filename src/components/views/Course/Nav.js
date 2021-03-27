@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch, useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -13,12 +13,13 @@ const useStyles = makeStyles({
 const Nav = () => {
   const classes = useStyles()
   const history = useHistory()
-  const match = useRouteMatch()
-  const [tab, setTab] = useState('')
+  const { url } = useRouteMatch()
+  const { pathname } = useLocation()
+  const [tab, setTab] = useState(pathname)
 
   const handleChange = (event, newValue) => {
     setTab(newValue)
-    history.replace(`${match.url}${newValue}`)
+    history.replace(newValue)
   }
 
   return (
@@ -29,10 +30,10 @@ const Nav = () => {
         indicatorColor='primary'
         textColor='primary'
       >
-        <Tab value='' label='内容' />
-        <Tab value='/question' label='问答' />
-        <Tab value='/quiz' label='作业' />
-        <Tab value='/mate' label='同学' />
+        <Tab value={url} label='内容' />
+        <Tab value={`${url}/question`} label='问答' />
+        <Tab value={`${url}/quiz`} label='作业' />
+        <Tab value={`${url}/mate`} label='同学' />
       </Tabs>
   )
 }
