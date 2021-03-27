@@ -1,5 +1,17 @@
 import { gql } from '@apollo/client'
 
+export const FIND_CHAT = gql`
+  query ($participant: String!) {
+    conversation(searchBy: {
+      participants: [
+        $participant
+      ]
+    }) {
+      id
+    }
+  }
+`
+
 export const CHATS = gql`
   query {
     me {
