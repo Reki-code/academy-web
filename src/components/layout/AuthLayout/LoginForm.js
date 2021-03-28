@@ -7,6 +7,7 @@ import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../../../graphql/user'
 import { useSnackbar } from 'notistack'
+import AsyncLocalStorage from '@createnextapp/async-local-storage'
 
 const LoginForm = () => {
   const history = useHistory()
@@ -35,8 +36,10 @@ const LoginForm = () => {
               variant: 'success'
             })
             const token = data?.login.value
-            localStorage.setItem('user-token', token)
-            history.replace('/')
+            AsyncLocalStorage.setItem('user-token', token)
+              .then(() => {
+                history.replace('/')
+              })
           })
           .catch(error => {
             enqueueSnackbar('密码错误', {
