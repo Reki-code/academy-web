@@ -9,15 +9,18 @@ import client from './graphql/client'
 import {
   BrowserRouter as Router,
 } from 'react-router-dom'
+import { SnackbarProvider } from 'notistack'
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <ApolloProvider client={client}>
-      <Router>
-        <CssBaseline />
-        <App />
-      </Router>
+      <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Router>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <App />
+        </Router>
+      </SnackbarProvider>
     </ApolloProvider>
   </ThemeProvider>,
   document.querySelector('#root'),
