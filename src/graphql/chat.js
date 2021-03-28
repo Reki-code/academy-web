@@ -21,6 +21,7 @@ export const CHATS = gql`
         participants {
           id
           displayName
+          avatar
         }
         latestMessage {
           sender {

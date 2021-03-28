@@ -30,7 +30,7 @@ const ChatListItem = ({ conversation, myId }) => {
     <>
       <ListItem alignItems='flex-start' onClick={handleClick}>
         <ListItemAvatar>
-          <Avatar src='https://avatars.githubusercontent.com/u/32997723?s=460&u=ebb97e29c0bc717c30aa61b99f75520bebe73aa2&v=4' />
+          <Avatar src={conversation.participants.filter(p => p.id !== myId)[0].avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={
