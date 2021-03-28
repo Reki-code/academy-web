@@ -1,4 +1,5 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
 import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import { Button, LinearProgress } from '@material-ui/core'
@@ -21,7 +22,7 @@ const LoginForm = () => {
       validate={values => {
         const errors = {};
         if (!values.username) {
-          errors.username = 'Required'
+          errors.username = '不能为空'
         }
         return errors;
       }}
@@ -48,28 +49,33 @@ const LoginForm = () => {
     >
       {({ submitForm, isSubmitting }) => (
         <Form>
-          <Field
-            component={TextField}
-            name='username'
-            type='text'
-            label='学号/工号'
-          />
-          <br />
-          <Field
-            component={TextField}
-            type='password'
-            label='密码'
-            name='password'
-          />
-          {isSubmitting && <LinearProgress />}
-          <br />
-          <Button
-            color='primary'
-            disabled={isSubmitting}
-            onClick={submitForm}
+          <Grid container
+            direction='column'
           >
-            登录
+            <Field
+              component={TextField}
+              name='username'
+              type='text'
+              label='学号/工号'
+            />
+            <br />
+            <Field
+              component={TextField}
+              type='password'
+              label='密码'
+              name='password'
+            />
+            {isSubmitting && <LinearProgress />}
+            <br />
+            <Button
+              color='primary'
+              variant='contained'
+              disabled={isSubmitting}
+              onClick={submitForm}
+            >
+              登录
           </Button>
+          </Grid>
         </Form>
       )}
     </Formik>
