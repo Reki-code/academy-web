@@ -1,6 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import CastForEducationIcon from '@material-ui/icons/CastForEducation'
 import LoginForm from './LoginForm'
 
 const AuthLayout = () => {
@@ -13,8 +14,9 @@ const AuthLayout = () => {
         justify='center'
         alignItems='center'
       >
+        <CastForEducationIcon fontSize='large' />
         <Grid item>
-          <Typography variant='h4' >
+          <Typography variant='h6' >
             在线学堂
           </Typography>
         </Grid>

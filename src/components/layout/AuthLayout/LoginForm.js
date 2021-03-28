@@ -25,6 +25,9 @@ const LoginForm = () => {
         if (!values.username) {
           errors.username = '不能为空'
         }
+        if (!values.password) {
+          errors.password = '不能为空'
+        }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
