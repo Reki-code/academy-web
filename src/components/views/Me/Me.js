@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-
+import { useApolloClient } from '@apollo/client'
 import { useQuery } from '@apollo/client'
 import { ME } from '../../../graphql/user'
 import Loading from '../../common/Loading'
@@ -30,10 +30,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Me = () => {
   const classes = useStyles()
+  const client = useApolloClient()
   const meInfo = useQuery(ME)
   const history = useHistory()
   const handleLogout = () => {
-    history.push('/auth')
+    localStorage.clear('user-token')
+    client.cache.reset()
+      .then(() => {
+        history.push('/auth')
+      })
   }
 
   if (meInfo.loading) return <Loading />
