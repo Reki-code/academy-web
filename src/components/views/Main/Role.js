@@ -11,8 +11,6 @@ const Role = () => {
   if (loading) return <Loading />
   if (error) return <Error error={error} />
 
-  console.log('update')
-
   return (
     <>
       {userInfo.me?.type === 'TEACHER' && <Redirect to='/teacher' />}

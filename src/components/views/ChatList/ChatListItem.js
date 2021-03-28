@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useRouteMatch, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
 import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -21,10 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatListItem = ({ conversation, myId }) => {
   const classes = useStyles()
-  const match = useRouteMatch()
   const history = useHistory()
   const handleClick = () => {
-    history.push(`${match.path}/${conversation.id}`)
+    history.push(`/chat/${conversation.id}`)
   }
 
   return (
