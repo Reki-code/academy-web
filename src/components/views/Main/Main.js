@@ -1,5 +1,6 @@
 import React from 'react'
-import { Switch, Route, Redirect} from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import Role from './Role'
 import StudentLayout from '../../layout/StudentLayout/StudentLayout'
 import TeacherLayout from '../../layout/TeacherLayout/TeacherLayout'
 import AuthLayout from '../../layout/AuthLayout/AuthLayout'
@@ -8,24 +9,14 @@ import Course from '../Course/Course'
 import Question from '../Question/Question'
 import Quiz from '../Quiz/Quiz'
 import Set from '../Set/Set'
-import { useQuery } from '@apollo/client'
-import { ME } from '../../../graphql/user'
 
 const Main = () => {
-  const { data: userInfo } = useQuery(ME)
 
   return (
     <>
       <Switch>
         <Route exact path='/'>
-          <div>Loading</div>
-          {
-            userInfo && (
-              <Redirect
-                to={userInfo.me.type === 'STUDENT' ? '/student' : '/teacher'}
-              />
-            )
-          }
+          <Role />
         </Route>
         <Route path='/student' component={StudentLayout} />
         <Route path='/teacher' component={TeacherLayout} />
