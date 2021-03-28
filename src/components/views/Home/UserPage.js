@@ -7,7 +7,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import { useQuery } from '@apollo/client'
-import { ALL_COURSE } from '../../../graphql/course'
+import { ENROLLED_COURSE } from '../../../graphql/course'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(20)
-  const courseResult = useQuery(ALL_COURSE)
+  const coursesInfo = useQuery(ENROLLED_COURSE)
 
   const handleChange = (event) => {
     setOrder(event.target.value)
@@ -63,12 +65,11 @@ const UserPage = () => {
           </FormControl>
         </div>
       </Box>
-      {courseResult.loading
-        ? <div>Loading</div>
-        : courseResult.error 
-          ? <div> {courseResult.error.toString()} </div>
-          : <CourseList courses={courseResult.data.courses} />
-      }
+      {coursesInfo.loading && <Loading />}
+      {coursesInfo.error && <Error error={coursesInfo.error} />}
+      {coursesInfo.data && (
+        <CourseList courses={coursesInfo.data.me.courseEnrolled} />
+      )}
     </>
   )
 }
