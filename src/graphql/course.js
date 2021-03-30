@@ -30,6 +30,8 @@ export const OPEN_COURSE = gql`
   query {
     courses(searchBy: {open: true	}){
       ...simpleCourseInfo
+      countEnrolled
+      createdAt
     }
   }
 `

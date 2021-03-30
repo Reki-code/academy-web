@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -8,7 +8,9 @@ import Select from '@material-ui/core/Select'
 import Annouuncement from './Announcement'
 import CourseList from './CourseList'
 import { useQuery } from '@apollo/client'
-import { ALL_COURSE } from '../../../graphql/course'
+import { OPEN_COURSE } from '../../../graphql/course'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -37,10 +39,22 @@ const useStyles = makeStyles((theme) => ({
 const CollegePage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(10)
-  const courseResult = useQuery(ALL_COURSE)
+  const openCourses = useQuery(OPEN_COURSE)
 
   const handleChange = (event) => {
     setOrder(event.target.value)
+  }
+
+  const courseList = () => {
+    if (openCourses.loading) return <Loading />
+    if (openCourses.error) return <Error error={openCourses.error} />
+    const courses = openCourses.data.courses
+    if (order === 20) {
+      return <CourseList courses={courses.slice().
+        sort((a, b) => (a.countEnrolled >= b.countEnrolled)
+      )}/>
+    }
+    return <CourseList courses={courses} />
   }
 
   return (
@@ -67,12 +81,7 @@ const CollegePage = () => {
           </FormControl>
         </div>
       </Box>
-      {courseResult.loading
-        ? <div>Loading</div>
-        : courseResult.error
-          ? <div> {courseResult.error.toString()} </div>
-          : <CourseList courses={courseResult.data.courses} />
-      }
+      { courseList() }
     </>
   )
 }
