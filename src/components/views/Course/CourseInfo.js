@@ -1,10 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import Nav from './Nav'
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +22,7 @@ const CourseInfo = ({ course }) => {
   const classes = useStyles()
 
   return (
-    <Paper elevation={3}>
+    <>
       <img 
         className={classes.media}
         src={course.cover}
@@ -48,8 +46,7 @@ const CourseInfo = ({ course }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Nav />
-    </Paper>
+    </>
   )
 }
 
