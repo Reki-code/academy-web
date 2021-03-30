@@ -8,7 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Typography from '@material-ui/core/Typography'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
-import { longFormat } from '../../../utils/timeFormat'
+import { longFormat } from '../../../../utils/timeFormat'
 
 const useStyles = makeStyles((theme) => ({
   root: {
