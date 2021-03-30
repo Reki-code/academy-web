@@ -11,7 +11,7 @@ import Slide from '@material-ui/core/Slide'
 import { Form, Formik, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/client'
-import { ADD_QUESTION, ALL_QESTIONS } from '../../../../graphql/question'
+import { ADD_QUESTION, ALL_QESTIONS } from '../../../../../graphql/question'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
