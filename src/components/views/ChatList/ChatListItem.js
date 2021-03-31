@@ -30,12 +30,12 @@ const ChatListItem = ({ conversation, myId }) => {
     <>
       <ListItem alignItems='flex-start' onClick={handleClick}>
         <ListItemAvatar>
-          <Avatar src={conversation.participants.filter(p => p.id !== myId)[0].avatar} />
+          <Avatar src={conversation.participants.filter(p => p.id !== myId)[0]?.avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={
             <div className={classes.flex}>
-              <div>{conversation.participants.filter(p => p.id !== myId)[0].displayName}</div>
+              <div>{conversation.participants.filter(p => p.id !== myId)[0]?.displayName}</div>
               <div>{timeago(conversation.latestMessage?.createdAt)}</div>
             </div>
           }

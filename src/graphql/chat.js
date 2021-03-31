@@ -45,6 +45,7 @@ export const MESSAGES = gql`
         id
         sender {
           id
+          avatar
         }
         content
         createdAt
