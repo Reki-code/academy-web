@@ -7,10 +7,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.grey[100],
   },
-  summay: {
-    marginTop: 8,
-    padding: '8px 16px',
-  },
   res: {
     marginTop: 8,
     backgroundColor: theme.palette.background.paper,
