@@ -5,6 +5,8 @@ import { useQuery, useMutation } from '@apollo/client'
 import { MESSAGES, SEND_MESSAGE, CHATS } from '../../../graphql/chat'
 import ChatMessages from './ChatMessages'
 import Input from './Input'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   }
 }))
-
-const AVATAR =
-  'https://i.pinimg.com/originals/0a/dd/87/0add874e1ea0676c4365b2dd7ddd32e3.jpg'
-
 
 const Chat = () => {
   const classes = useStyles()
@@ -59,12 +57,8 @@ const Chat = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [])
-  if (messages.loading) {
-    return <div>loading</div>
-  }
-  if (messages.error) {
-    return <div>error</div>
-  }
+  if (messages.loading) return <Loading />
+  if (messages.error) return <Error error={messages.error} />
   const chats = messages.data.conversation.messages
   const myId = messages.data.me.id
   const handleSend = () => {
@@ -85,7 +79,7 @@ const Chat = () => {
             <ChatMessages
               key={chat.id}
               side={chat.sender.id === myId ? 'right' : 'left'}
-              avatar={AVATAR}
+              avatar={chat.sender.avatar}
               messages={[
                 chat.content
               ]}
