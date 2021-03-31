@@ -10,6 +10,7 @@ import Question from '../Question/Question'
 import Quiz from '../Quiz/Quiz'
 import Set from '../Set/Set'
 import Profile from '../Profile/Profile'
+import Resource from '../Resource/Resource'
 
 const Main = () => {
 
@@ -22,12 +23,13 @@ const Main = () => {
         <Route path='/student' component={StudentLayout} />
         <Route path='/teacher' component={TeacherLayout} />
         <Route path='/auth' component={AuthLayout} />
-        <Route paht='/profile/:userId' component={Profile} />
         <Route exact path='/chat/:conversationId' component={Chat} />
         <Route path='/course/:courseId' component={Course} />
         <Route path='/question/:questionId' component={Question} />
         <Route path='/quiz/:quizId' component={Quiz} />
+        <Route path='/resource/:resourceId' component={Resource} />
         <Route exact path='/set/:token' component={Set} />
+        <Route paht='/profile/:userId' component={Profile} />
       </Switch>
     </>
   )
