@@ -9,6 +9,7 @@ import Course from '../Course/Course'
 import Question from '../Question/Question'
 import Quiz from '../Quiz/Quiz'
 import Set from '../Set/Set'
+import Profile from '../Profile/Profile'
 
 const Main = () => {
 
@@ -21,6 +22,7 @@ const Main = () => {
         <Route path='/student' component={StudentLayout} />
         <Route path='/teacher' component={TeacherLayout} />
         <Route path='/auth' component={AuthLayout} />
+        <Route paht='/profile/:userId' component={Profile} />
         <Route exact path='/chat/:conversationId' component={Chat} />
         <Route path='/course/:courseId' component={Course} />
         <Route path='/question/:questionId' component={Question} />
