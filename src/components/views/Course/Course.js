@@ -8,7 +8,10 @@ import Overview from './Overview/Overview'
 import QuestionList from './QuestionList/QuestionList'
 import QuizList from './QuizList/QuizList'
 import MateList from './MateList/MateList'
+import Unrolled from './Unrolled/Unrolled'
 import Paper from '@material-ui/core/Paper'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const Course = () => {
   const { courseId } = useParams()
@@ -17,24 +20,32 @@ const Course = () => {
     variables: { courseId }
   })
 
+  if (courseInfo.loading) return <Loading/>
+  if (courseInfo.error) return <Error error={courseInfo.error} />
+
+  const isEnrolled = courseInfo.data.course.isEnrolled
+  
+  const content = (() => {
+    if (isEnrolled) {
+      return <>
+        <Switch>
+          <Route exact path={match.path} component={Overview} />
+          <Route path={`${match.path}/question`} component={QuestionList} />
+          <Route path={`${match.path}/quiz`} component={QuizList} />
+          <Route path={`${match.path}/mate`} component={MateList} />
+        </Switch>
+      </>
+    }
+    return <Unrolled courseId={courseId} />
+  })()
+
   return (
     <>
       <Paper elevation={3}>
-        {
-          courseInfo.loading
-            ? <div>Loading</div>
-            : courseInfo.error
-              ? <div>Error</div>
-              : <CourseInfo course={courseInfo.data.course} />
-        }
-        <Nav />
+        <CourseInfo course={courseInfo.data.course} />
+        { isEnrolled && <Nav /> }
       </Paper>
-      <Switch>
-        <Route exact path={match.path} component={Overview} />
-        <Route path={`${match.path}/question`} component={QuestionList} />
-        <Route path={`${match.path}/quiz`} component={QuizList} />
-        <Route path={`${match.path}/mate`} component={MateList} />
-      </Switch>
+      { content }
     </>
   )
 }

@@ -49,6 +49,24 @@ export const ALL_COURSE = gql`
   }
 `
 
+export const ENROLL = gql`
+  mutation ($courseId: String!) {
+    enroll(input: {
+      courseId: $courseId
+    }) {
+      enrollment {
+        courseEnrolled {
+          id
+          isEnrolled
+          teacher {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
 export const COURSE_INFO = gql`
   ${SIMPLE_COURSE_INFO}
   query ($courseId: ID!) {
