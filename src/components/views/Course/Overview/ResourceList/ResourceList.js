@@ -12,20 +12,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ResourceList = () => {
+const ResourceList = ({ topic }) => {
   const classes = useStyles()
+
+  const resources = topic.resource
 
   return (
     <>
       <Paper variant='outlined' square className={classes.summay}>
         <Typography variant='h6'>
-          操作系统概述
+          {topic.title}
         </Typography>
-        主要内容：举例介绍操作系统所做的工作；操作系统的定义与特征；操作系统的分类；操作系统发展中典型技术；典型操作系统结构。
+        {topic.description}
       </Paper>
       <List>
-        <ResourceItem resource={{ id: 1 }} />
-        <ResourceItem resource={{ id: 2 }} />
+        {
+          resources.map(resource => 
+            <ResourceItem resource={resource} />
+          )
+        }
       </List>
     </>
   )

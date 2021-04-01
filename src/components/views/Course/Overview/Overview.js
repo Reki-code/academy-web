@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useParams } from 'react-router-dom'
 import Nav from './Nav'
-import ResourceList from './ResourceList/ResourceList.js'
+import ResourceList from './ResourceList/ResourceList'
+import { useQuery } from '@apollo/client'
+import { RESOURCES } from '../../../../graphql/resource'
+import Loading from '../../../common/Loading'
+import Error from '../../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,20 +20,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Overview = () => {
   const classes = useStyles()
+  const { courseId } = useParams()
+  const resourcesInfo = useQuery(RESOURCES, {
+    variables: { courseId },
+  })
   const [topic, setTopic] = useState(0)
   const handleChange = (e, newValue) => {
     setTopic(newValue)
   }
+
+  if (resourcesInfo.loading) return <Loading />
+  if (resourcesInfo.error) return <Error error={resourcesInfo.error} />
+
+  console.log({resourcesInfo})
+  const topics = resourcesInfo.data.course.topics
 
   return (
     <div className={classes.root}>
       <Nav
         index={topic}
         handleChange={handleChange}
-        count={5}
+        count={topics.length}
       />
       <div className={classes.res}>
-        <ResourceList />
+        <ResourceList topic={topics[topic]} />
       </div>
     </div>
   )

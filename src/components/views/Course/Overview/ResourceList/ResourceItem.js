@@ -20,7 +20,7 @@ const ResourceItem = ({ resource }) => {
           <Avatar />
         </ListItemAvatar>
         <ListItemText
-          primary='操作系统的定义和作用'
+          primary='这里是标题'
           secondary={
             <>
               <Typography
@@ -28,7 +28,7 @@ const ResourceItem = ({ resource }) => {
                 variant="body2"
                 color="textPrimary"
               >
-                Video
+                {resource.category}
                   </Typography>
               {" 20 min"}
             </>
