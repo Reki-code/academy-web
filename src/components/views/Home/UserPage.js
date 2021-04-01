@@ -44,6 +44,17 @@ const UserPage = () => {
     setOrder(event.target.value)
   }
 
+  if (coursesInfo.loading) return <Loading />
+  if (coursesInfo.error) return <Error error={coursesInfo.error} />
+
+  const type = coursesInfo.data.me.type
+
+  const courses = (() => {
+    return type === 'TEACHER'
+      ? coursesInfo.data.me.courseTeache
+      : coursesInfo.data.me.courseEnrolled
+  })()
+
   return (
     <>
       <Box className={classes.order}>
@@ -65,11 +76,7 @@ const UserPage = () => {
           </FormControl>
         </div>
       </Box>
-      {coursesInfo.loading && <Loading />}
-      {coursesInfo.error && <Error error={coursesInfo.error} />}
-      {coursesInfo.data && (
-        <CourseList courses={coursesInfo.data.me.courseEnrolled} />
-      )}
+      <CourseList courses={courses} />
     </>
   )
 }

@@ -18,7 +18,11 @@ export const ENROLLED_COURSE = gql`
   query {
     me {
       id
+      type
       courseEnrolled {
+        ...simpleCourseInfo
+      }
+      courseTeache {
         ...simpleCourseInfo
       }
     }
@@ -50,6 +54,8 @@ export const COURSE_INFO = gql`
   query ($courseId: ID!) {
     course(id: $courseId) {
       ...simpleCourseInfo
+      isEnrolled
+      description
     }
   }
 `
