@@ -32,7 +32,6 @@ const Overview = () => {
   if (resourcesInfo.loading) return <Loading />
   if (resourcesInfo.error) return <Error error={resourcesInfo.error} />
 
-  console.log({resourcesInfo})
   const topics = resourcesInfo.data.course.topics
   if (topics.length === 0) return <div>Empty</div>
 
