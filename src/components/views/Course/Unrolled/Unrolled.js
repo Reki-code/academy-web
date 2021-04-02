@@ -2,6 +2,7 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import { useSnackbar } from 'notistack'
 import { useMutation } from '@apollo/client'
 import { ENROLL, ENROLLED_COURSE, COURSE_INFO } from '../../../../graphql/course'
 
