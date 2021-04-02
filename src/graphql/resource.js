@@ -7,7 +7,9 @@ export const RESOURCES = gql`
       topics {
         title
         description
-        resource {
+        resources {
+          id
+          title
           category
         }
       }
@@ -15,14 +17,14 @@ export const RESOURCES = gql`
   }
 `
 
-export const RESOURCES_TITLE = gql`
-  query ($courseId: ID!) {
-    course(id: $courseId) {
+export const RESOURCE_INFO = gql`
+  query ($resourceId: ID!) {
+    resource (id: $resourceId) {
       id
-      topics {
-        title
-        description
-      }
+      title
+      category
+      content
+      url
     }
   }
 `

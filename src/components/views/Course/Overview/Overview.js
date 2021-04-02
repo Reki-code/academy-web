@@ -34,6 +34,7 @@ const Overview = () => {
 
   console.log({resourcesInfo})
   const topics = resourcesInfo.data.course.topics
+  if (topics.length === 0) return <div>Empty</div>
 
   return (
     <div className={classes.root}>

@@ -20,13 +20,13 @@ const ResourceItem = ({ resource }) => {
           <Avatar />
         </ListItemAvatar>
         <ListItemText
-          primary='这里是标题'
+          primary={resource.title}
           secondary={
             <>
               <Typography
-                component="span"
-                variant="body2"
-                color="textPrimary"
+                component='span'
+                variant='body2'
+                color='textPrimary'
               >
                 {resource.category}
                   </Typography>

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 const ResourceList = ({ topic }) => {
   const classes = useStyles()
 
-  const resources = topic.resource
+  const resources = topic.resources
 
   return (
     <>
