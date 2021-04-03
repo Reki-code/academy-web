@@ -43,7 +43,7 @@ const AnswerItem = ({ answer }) => {
 
   return (
     <>
-      <ListItem className={classes.root} alignItems="flex-start">
+      <ListItem className={classes.root} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar src={answer.author.avatar} />
         </ListItemAvatar>
@@ -78,7 +78,7 @@ const AnswerItem = ({ answer }) => {
         />
       </ListItem>
       <Divider/>
-      <Comments answerId={answer.id} />
+      <Comments comments={answer.comments} />
     </>
   )
 }

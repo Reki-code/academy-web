@@ -29,6 +29,7 @@ export const QUESTION = gql`
       title
       content
       author {
+        id
         displayName
         avatar
       }
@@ -45,6 +46,7 @@ export const QUESTION = gql`
         vote
         content
         author {
+          id
           avatar
           displayName
         }
@@ -52,6 +54,7 @@ export const QUESTION = gql`
         comments {
           content
           author {
+            id
             displayName
           }
         }

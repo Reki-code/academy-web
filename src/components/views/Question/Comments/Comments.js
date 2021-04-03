@@ -1,17 +1,17 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import CommentItem from './CommentItem'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginLeft: 64,
-  },
-}))
-
-const Comments = ({ answerId }) => {
-  const classes = useStyles()
+const Comments = ({ comments }) => {
+  if (comments.length === 0) return null
 
   return (
-    <div className={classes.root}>{ answerId }</div>
+    <List>
+      {
+        comments.map(comment => <CommentItem comment={comment} />)
+      }
+      
+    </List>
   )
 }
 

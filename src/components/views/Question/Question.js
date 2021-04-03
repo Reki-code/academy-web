@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
@@ -12,10 +12,11 @@ import StarIcon from '@material-ui/icons/Star'
 import StarOutlineIcon from '@material-ui/icons/StarOutline'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import Avatar from '@material-ui/core/Avatar'
-import { useQuery } from '@apollo/client'
-import { QUESTION } from '../../../graphql/question'
+import { useQuery, useMutation } from '@apollo/client'
+import { QUESTION, ADD_ANSWER } from '../../../graphql/question'
 import timeago from '../../../utils/timeago'
 import AnswerList from './AnswerList'
+import InputDialog from './InputDialog'
 
 const useStyles = makeStyles((theme) => ({
   row: {
@@ -40,6 +41,32 @@ const useStyles = makeStyles((theme) => ({
 const Question = () => {
   const classes = useStyles()
   const { questionId } = useParams()
+  const [dialog, setDialog] = useState({
+    open: false,
+    title: '',
+    content: '',
+    handleSend: (data) => { console.log('Send', data) },
+  })
+  const [addAnswer] = useMutation(ADD_ANSWER)
+  const handleAnswer = () => {
+    setDialog({
+      ...dialog,
+      open: true,
+      title: '回答',
+      handleSend: (data) => {
+        addAnswer({
+          variables: {
+            questionId,
+            answer: data,
+          },
+          refetchQueries: [{ query: QUESTION, variables: { questionId } }],
+        })
+      }
+    })
+  }
+  const handleFavorite = () => {
+    console.log('Add to Favorite List')
+  }
   const questionInfo = useQuery(QUESTION, {
     variables: { questionId }
   })
@@ -68,7 +95,7 @@ const Question = () => {
       <Divider />
       <div className={classes.question}>
         <div>
-          { question.content }
+          {question.content}
         </div>
         <div className={classes.row}>
           <div className={classes.stats}>
@@ -79,12 +106,16 @@ const Question = () => {
             <Button>
               <ThumbDownIcon fontSize='small' />
             </Button>
-            <Button>
+            <Button
+              onClick={handleAnswer}
+            >
               <RateReviewIcon fontSize='small' />
-            回答
-          </Button>
+              回答
+            </Button>
           </div>
-          <Button>
+          <Button
+            onClick={handleFavorite}
+          >
             <StarIcon fontSize='small' />
             收藏
           </Button>
@@ -92,6 +123,10 @@ const Question = () => {
       </div>
       <Divider />
       <AnswerList answers={answers} />
+      <InputDialog
+        dialog={dialog}
+        setDialog={setDialog}
+      />
     </Container>
   )
 }
