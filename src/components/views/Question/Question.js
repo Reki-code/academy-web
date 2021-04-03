@@ -16,6 +16,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import { QUESTION, ADD_ANSWER } from '../../../graphql/question'
 import timeago from '../../../utils/timeago'
 import AnswerList from './AnswerList'
+import MUIRichTextEditor from 'mui-rte'
 import InputDialog from './InputDialog'
 
 const useStyles = makeStyles((theme) => ({
@@ -94,9 +95,24 @@ const Question = () => {
       </div>
       <Divider />
       <div className={classes.question}>
-        <div>
-          {question.content}
-        </div>
+        {
+          (() => {
+            const content = question.content
+            if (content.startsWith('{')) {
+              return (
+                <MUIRichTextEditor
+                  readOnly
+                  inheritFontSize
+                  controls={[]}
+                  defaultValue={content}
+                />
+              )
+            }
+            return <div>
+              {question.content}
+            </div>
+          })()
+        }
         <div className={classes.row}>
           <div className={classes.stats}>
             <Button>

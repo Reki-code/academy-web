@@ -15,6 +15,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import timeago from '../../../utils/timeago'
 import Comments from './Comments/Comments'
+import MUIRichTextEditor from 'mui-rte'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,22 @@ const AnswerItem = ({ answer }) => {
           secondary={
             <>
               <Typography color='textPrimary' component='span'>
-                {answer.content}
+                {
+                  (() => {
+                    const content = answer.content
+                    if (content.startsWith('{')) {
+                      return (
+                        <MUIRichTextEditor
+                          readOnly
+                          inheritFontSize
+                          controls={[]}
+                          defaultValue={content}
+                        />
+                      )
+                    }
+                    return <span>{content}</span>
+                  })()
+                }
                 <Divider component='span' />
                 <span className={classes.stats}>
                   <Button>
@@ -77,7 +93,7 @@ const AnswerItem = ({ answer }) => {
           }
         />
       </ListItem>
-      <Divider/>
+      <Divider />
       <Comments comments={answer.comments} />
     </>
   )
