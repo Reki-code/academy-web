@@ -8,6 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Typography from '@material-ui/core/Typography'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
+import MUIRichTextEditor from 'mui-rte'
 import { longFormat } from '../../../../utils/timeFormat'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,10 +55,28 @@ const QuestionItem = ({ question }) => {
           secondary={
             <>
               <Typography variant='body2' color='textPrimary' component='span'>
-                {question.content}
+                {
+                  (() => {
+                    const content = question.content
+                    if (content.startsWith('{')) {
+                      return (
+                        <MUIRichTextEditor
+                          readOnly
+                          inheritFontSize
+                          controls={[]}
+                          defaultValue={content}
+                        />
+                      )
+                    }
+                    return <div>
+                      {question.content}
+                    </div>
+                  })()
+                }
               </Typography>
               <span className={classes.block}>
                 <span>{question.author.displayName}</span>
+                <span> · </span>
                 <span>{longFormat(question.updatedAt)}</span>
               </span>
             </>
