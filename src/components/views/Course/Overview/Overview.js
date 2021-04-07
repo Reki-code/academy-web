@@ -48,10 +48,12 @@ const Overview = ({ isTeache }) => {
             </div>
           </>
       }
-      <Fab>
+      {
+        isTeache && <Fab>
         <AddIcon />
         添加
       </Fab>
+      }
     </div>
   )
 }
