@@ -10,6 +10,9 @@ import { useQuery } from '@apollo/client'
 import { ENROLLED_COURSE } from '../../../graphql/course'
 import Loading from '../../common/Loading'
 import Error from '../../common/Error'
+import Button from '@material-ui/core/Button'
+import ImportContactsIcon from '@material-ui/icons/ImportContacts'
+import NewCourse from './NewCourse/NewCourse'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -38,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(20)
+  const [newCourse, setNewCourse] = useState(false)
   const coursesInfo = useQuery(ENROLLED_COURSE)
 
   const handleChange = (event) => {
@@ -54,6 +58,13 @@ const UserPage = () => {
       ? coursesInfo.data.me.courseTeache
       : coursesInfo.data.me.courseEnrolled
   })()
+  const handleCloseNew = () => {
+    setNewCourse(false)
+  }
+  const handleNew = () => {
+    console.log('new course')
+    setNewCourse(true)
+  }
 
   return (
     <>
@@ -77,6 +88,16 @@ const UserPage = () => {
         </div>
       </Box>
       <CourseList courses={courses} />
+      <Button
+        variant='contained'
+        color='primary'
+        fullWidth
+        onClick={handleNew}
+      >
+        <ImportContactsIcon style={{ marginRight: 8 }} />
+        开设新的课程
+      </Button>
+      <NewCourse open={newCourse} handleClose={handleCloseNew} />
     </>
   )
 }

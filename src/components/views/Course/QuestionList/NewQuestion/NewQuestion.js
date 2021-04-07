@@ -86,6 +86,7 @@ const NewQuestion = ({ open, handleClose, courseId }) => {
         </AppBar>
         <DialogContent>
           <TextField
+            fullWidth
             name='title'
             label='问题'
             onChange={handleChange}

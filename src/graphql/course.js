@@ -29,6 +29,18 @@ export const ENROLLED_COURSE = gql`
   }
 `
 
+export const NEW_COURSE = gql`
+  mutation ($title: String!, $open: Boolean, $description: String) {
+    createCourse(
+      input: { title: $title, open: $open, description: $description }
+    ) {
+      course {
+        id
+      }
+    }
+  }
+`
+
 export const OPEN_COURSE = gql`
   ${SIMPLE_COURSE_INFO}
   query {
