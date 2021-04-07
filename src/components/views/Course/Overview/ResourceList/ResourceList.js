@@ -1,34 +1,27 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import ResourceItem from './ResourceItem'
-
-const useStyles = makeStyles((theme) => ({
-  summay: {
-    marginTop: 8,
-    padding: '8px 16px',
-  },
-}))
+import Box from '@material-ui/core/Box'
 
 const ResourceList = ({ topic }) => {
-  const classes = useStyles()
-
   const resources = topic.resources
 
   return (
     <>
-      <Paper variant='outlined' square className={classes.summay}>
-        <Typography variant='h6'>
-          {topic.title}
-        </Typography>
-        {topic.description}
+      <Paper variant='outlined' square>
+        <Box px={2} py={1}>
+          <Typography variant='h6'>
+            {topic.title}
+          </Typography>
+          {topic.description}
+        </Box>
       </Paper>
       <List>
         {
           resources.map(resource => 
-            <ResourceItem resource={resource} />
+            <ResourceItem key={resource.id} resource={resource} />
           )
         }
       </List>

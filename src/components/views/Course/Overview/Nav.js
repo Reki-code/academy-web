@@ -7,11 +7,10 @@ import Tab from '@material-ui/core/Tab'
 
 const PTabs = withStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.grey[50],
     borderBottom: '1px solid #e8e8e8',
     position: 'sticky',
     top: 0,
-    marginTop: 6,
+    marginTop: theme.spacing(1),
     width: '100%',
   },
   indicator: {

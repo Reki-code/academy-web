@@ -29,7 +29,7 @@ const ResourceItem = ({ resource }) => {
                 color='textPrimary'
               >
                 {resource.category}
-                  </Typography>
+              </Typography>
               {" 20 min"}
             </>
           }

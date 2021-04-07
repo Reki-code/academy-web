@@ -70,6 +70,9 @@ export const ENROLL = gql`
 export const COURSE_INFO = gql`
   ${SIMPLE_COURSE_INFO}
   query ($courseId: ID!) {
+    me {
+      id
+    }
     course(id: $courseId) {
       ...simpleCourseInfo
       isEnrolled

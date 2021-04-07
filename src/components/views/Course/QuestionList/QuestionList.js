@@ -6,20 +6,17 @@ import { ALL_QESTIONS } from '../../../../graphql/question'
 import List from '@material-ui/core/List'
 import QuestionItem from './QuestionItem'
 import Divider from '@material-ui/core/Divider'
-import Fab from '@material-ui/core/Fab'
 import EditIcon from '@material-ui/icons/Edit'
 import NewQuestion from './NewQuestion/NewQuestion'
+import Loading from '../../../common/Loading'
+import Error from '../../../common/Error'
+import Fab from '../../../common/Fab'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
     },
-  },
-  fab: {
-    position: 'fixed',
-    bottom: 0,
-    right: 0,
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -37,13 +34,10 @@ const QuestionList = () => {
     variables: { courseId }
   })
 
-  if (questionsInfo.loading) {
-    return <div>Loading</div>
-  }
-  if (questionsInfo.error) {
-    return <div>Error</div>
-  }
-  const questions = questionsInfo.data.course.questions
+  if (questionsInfo.loading) return <Loading />
+  if (questionsInfo.error) return <Error error={questionsInfo.error} />
+
+  const questions = questionsInfo.data?.course.questions
   const handleNew = () => {
     setNewDialog(true)
   }
@@ -62,8 +56,8 @@ const QuestionList = () => {
             )
         }
       </List>
-      <Fab className={classes.fab} variant='extended' onClick={handleNew}>
-        <EditIcon className={classes.extendedIcon} />
+      <Fab onClick={handleNew}>
+        <EditIcon />
         提问
       </Fab>
       <NewQuestion courseId={courseId} open={newDialog} handleClose={handleClose} />

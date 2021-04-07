@@ -7,18 +7,16 @@ import { useQuery } from '@apollo/client'
 import { RESOURCES } from '../../../../graphql/resource'
 import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
+import Fab from '../../../common/Fab'
+import AddIcon from '@material-ui/icons/Add'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[100],
-  },
   res: {
     marginTop: 8,
-    backgroundColor: theme.palette.background.paper,
   }
 }))
 
-const Overview = () => {
+const Overview = ({ isTeache }) => {
   const classes = useStyles()
   const { courseId } = useParams()
   const resourcesInfo = useQuery(RESOURCES, {
@@ -33,18 +31,27 @@ const Overview = () => {
   if (resourcesInfo.error) return <Error error={resourcesInfo.error} />
 
   const topics = resourcesInfo.data.course.topics
-  if (topics.length === 0) return <div>Empty</div>
 
   return (
-    <div className={classes.root}>
-      <Nav
-        index={topic}
-        handleChange={handleChange}
-        count={topics.length}
-      />
-      <div className={classes.res}>
-        <ResourceList topic={topics[topic]} />
-      </div>
+    <div>
+      {
+        topics.length === 0
+          ? <div>Empty</div>
+          : <>
+            <Nav
+              index={topic}
+              handleChange={handleChange}
+              count={topics.length}
+            />
+            <div className={classes.res}>
+              <ResourceList topic={topics[topic]} />
+            </div>
+          </>
+      }
+      <Fab>
+        <AddIcon />
+        添加
+      </Fab>
     </div>
   )
 }

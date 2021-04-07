@@ -24,12 +24,15 @@ const Course = () => {
   if (courseInfo.error) return <Error error={courseInfo.error} />
 
   const isEnrolled = courseInfo.data.course.isEnrolled
+  const isTeache = courseInfo.data.me.id === courseInfo.data.course.teacher.id
   
   const content = (() => {
-    if (isEnrolled) {
+    if (isEnrolled || isTeache) {
       return <>
         <Switch>
-          <Route exact path={match.path} component={Overview} />
+          <Route exact path={match.path}>
+            <Overview isTeache={isTeache} />
+          </Route>
           <Route path={`${match.path}/question`} component={QuestionList} />
           <Route path={`${match.path}/quiz`} component={QuizList} />
           <Route path={`${match.path}/mate`} component={MateList} />
@@ -43,7 +46,7 @@ const Course = () => {
     <>
       <Paper elevation={3}>
         <CourseInfo course={courseInfo.data.course} />
-        { isEnrolled && <Nav /> }
+        { (isEnrolled || isTeache) && <Nav /> }
       </Paper>
       { content }
     </>
