@@ -3,7 +3,7 @@ import { useHistory, useRouteMatch, useLocation } from 'react-router-dom'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
-const Nav = () => {
+const Nav = ({ isTeache }) => {
   const history = useHistory()
   const { url } = useRouteMatch()
   const { pathname } = useLocation()
@@ -25,7 +25,7 @@ const Nav = () => {
         <Tab value={url} label='内容' />
         <Tab value={`${url}/question`} label='问答' />
         <Tab value={`${url}/quiz`} label='作业' />
-        <Tab value={`${url}/mate`} label='同学' />
+        <Tab value={`${url}/mate`} label={ isTeache ? '学生' : '同学' } />
       </Tabs>
   )
 }

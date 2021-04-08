@@ -48,7 +48,7 @@ const Course = () => {
     <>
       <Paper elevation={3}>
         <CourseInfo course={courseInfo.data.course} />
-        { (isEnrolled || isTeache) && <Nav /> }
+        { (isEnrolled || isTeache) && <Nav isTeache={isTeache} /> }
       </Paper>
       { content }
     </>
