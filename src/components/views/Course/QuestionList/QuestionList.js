@@ -11,6 +11,7 @@ import NewQuestion from './NewQuestion/NewQuestion'
 import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
 import Fab from '../../../common/Fab'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,18 +45,23 @@ const QuestionList = () => {
 
   return (
     <div className={classes.root}>
-      <div>Question List</div>
-      <List>
-        {
-          questions
-            .map(question =>
-              <Fragment key={question.id}>
-                <QuestionItem question={question} />
-                <Divider />
-              </Fragment>
-            )
-        }
-      </List>
+      {
+        questions.length === 0
+          ? <Typography variant='body1' align='center' color='textSecondary' >
+            暂时没有人提问
+          </Typography>
+          : <List>
+            {
+              questions
+                .map(question =>
+                  <Fragment key={question.id}>
+                    <QuestionItem question={question} />
+                    <Divider />
+                  </Fragment>
+                )
+            }
+          </List>
+      }
       <Fab onClick={handleNew}>
         <EditIcon />
         提问

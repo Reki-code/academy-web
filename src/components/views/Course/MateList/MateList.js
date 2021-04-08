@@ -6,6 +6,7 @@ import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
 import List from '@material-ui/core/List'
 import MateListItem from './MateListItem'
+import Typography from '@material-ui/core/Typography'
 
 const MateList = () => {
   const { courseId } = useParams()
@@ -20,12 +21,17 @@ const MateList = () => {
 
   return (
     <>
-      <div>MateList</div>
-      <List>
-        {
-          users.map(user => <MateListItem key={user.id} user={user} />)
-        }
-      </List>
+      {
+        users.length === 0
+          ? <Typography variant='body1' align='center' color='textSecondary' >
+            还没有人开始学习这门课
+          </Typography>
+          : <List>
+            {
+              users.map(user => <MateListItem key={user.id} user={user} />)
+            }
+          </List>
+      }
     </>
   )
 }
