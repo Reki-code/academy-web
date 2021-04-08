@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import { useParams } from 'react-router-dom'
@@ -9,6 +9,8 @@ import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
 import Fab from '../../../common/Fab'
 import AddIcon from '@material-ui/icons/Add'
+import Typography from '@material-ui/core/Typography'
+import NewQuiz from './NewQuiz/NewQuiz'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -26,6 +28,13 @@ const Quiz = () => {
   const quizzesInfo = useQuery(ALL_QUIZZES, {
     variables: { courseId }
   })
+  const [open, setOpen] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleAdd = () => {
+    setOpen(true)
+  }
 
   if (quizzesInfo.loading) return <Loading />
   if (quizzesInfo.error) return <Error error={quizzesInfo.error} />
@@ -34,18 +43,27 @@ const Quiz = () => {
 
   return (
     <>
-      <div>
-        请在截止日期前提交作业。
-      </div>
-      <List className={classes.list}>
-        {
-          quizzes.map(quiz => <QuizListItem key={quiz.id} quiz={quiz} />)
-        }
-      </List>
-      <Fab>
+      {
+        quizzes.length === 0
+          ? <Typography variant='body1' align='center' color='textSecondary' >
+            暂时没有作业
+          </Typography>
+          : <>
+            <Typography variant='body1' color='textSecondary' >
+              请在截止日期前提交作业。
+            </Typography>
+              <List className={classes.list}>
+              {
+                quizzes.map(quiz => <QuizListItem key={quiz.id} quiz={quiz} />)
+              }
+            </List>
+          </>
+      }
+      <Fab onClick={handleAdd}>
         <AddIcon />
         添加作业
       </Fab>
+      <NewQuiz open={open} handleClose={handleClose} courseId={courseId} />
     </>
   )
 }

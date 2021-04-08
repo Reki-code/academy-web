@@ -32,3 +32,15 @@ export const QUIZ_INFO = gql`
     }
   }
 `
+
+export const COURSE_ADD_QUIZ = gql`
+  mutation ($input: CourseAddQuizInput!) {
+    courseAddQuiz(
+      input: $input
+    ) {
+      course {
+        id
+      }
+    }
+  }
+`

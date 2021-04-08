@@ -10,10 +10,11 @@ import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import { useMutation } from '@apollo/client'
-import { COURSE_ADD_TOPIC, RESOURCES } from '../../../../../graphql/resource'
+import { COURSE_ADD_QUIZ, ALL_QUIZZES } from '../../../../../graphql/quiz'
 import { useSnackbar } from 'notistack'
-import { Formik, Form, Field } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { Formik, Form, Field, FieldArray } from 'formik'
+import { TextField } from 'formik-material-ui'
+import QuestionArrayHelper from './QuestionArrayHelper'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -34,27 +35,30 @@ const Transition = forwardRef((props, ref) => {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-const NewTopic = ({ open, handleClose, courseId }) => {
+const initialValues = {
+  title: '',
+  questions: [],
+  dueDate: new Date(),
+}
+
+const NewQuiz = ({ open, handleClose, courseId }) => {
   const classes = useStyles()
   const { enqueueSnackbar } = useSnackbar()
-  const [addTopic] = useMutation(COURSE_ADD_TOPIC)
+  const [addTopic] = useMutation(COURSE_ADD_QUIZ)
 
   return (
     <Formik
-      initialValues={{
-        title: '',
-        description: '',
-        resources: [],
-      }}
-      onSubmit={(values, { setSubmitting }) => {
+      initialValues={initialValues}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        console.log({ values })
         addTopic({
           variables: {
             input: {
               courseId,
-              ...values,
+              quiz: values,
             }
           },
-          refetchQueries: [{query: RESOURCES, variables: {courseId}}],
+          refetchQueries: [{ query: ALL_QUIZZES, variables: { courseId } }],
         })
           .then(() => {
             enqueueSnackbar('添加成功', {
@@ -67,10 +71,11 @@ const NewTopic = ({ open, handleClose, courseId }) => {
             })
           })
         setSubmitting(false)
+        resetForm(initialValues)
         handleClose()
       }}
     >
-      {({ submitForm, isSubmitting }) => (
+      {({ values, submitForm, isSubmitting }) => (
         <Form>
           <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
@@ -79,7 +84,7 @@ const NewTopic = ({ open, handleClose, courseId }) => {
                   <CloseIcon />
                 </IconButton>
                 <Typography variant='h6' className={classes.title}>
-                  新主题
+                  新作业
                 </Typography>
                 <Button autoFocus color='inherit' onClick={submitForm}>
                   提交
@@ -90,18 +95,21 @@ const NewTopic = ({ open, handleClose, courseId }) => {
               <Field
                 component={TextField}
                 name='title'
-                label='主题'
+                label='标题'
                 fullWidth
               />
               <br />
-              <Field
-                component={TextField}
-                name='description'
-                label='描述'
-                fullWidth
-                multiline
+              <FieldArray
+                name='questions'
+                render={
+                  arrayHelpers => (
+                    <QuestionArrayHelper
+                      arrayHelpers={arrayHelpers}
+                      values={values}
+                    />
+                  )
+                }
               />
-              {/* {isSubmitting} */}
             </DialogContent>
           </Dialog>
         </Form>
@@ -110,4 +118,4 @@ const NewTopic = ({ open, handleClose, courseId }) => {
   )
 }
 
-export default NewTopic
+export default NewQuiz
