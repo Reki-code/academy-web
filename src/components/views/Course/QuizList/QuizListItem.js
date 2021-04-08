@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const QuizListItem = ({ quiz = { id: '1'} }) => {
+const QuizListItem = ({ quiz, isTeache }) => {
   const classes = useStyles()
   const history = useHistory()
 
@@ -36,7 +36,7 @@ const QuizListItem = ({ quiz = { id: '1'} }) => {
 
   return (
     <Paper className={classes.root} square onClick={handleClick} >
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems='flex-start'>
         <ListItemAvatar>
           <AssignmentIcon />
         </ListItemAvatar>
@@ -45,7 +45,7 @@ const QuizListItem = ({ quiz = { id: '1'} }) => {
             <>
               <div className={classes.flex}>
                 <div>{quiz.title}</div>
-                <div>60%</div>
+                { !isTeache && <div>{quiz.pass * 100}%</div> }
               </div>
               <Typography className={classes.weight} align='right' variant='body2'>权重5%</Typography>
               <Divider />

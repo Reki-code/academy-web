@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Quiz = () => {
+const Quiz = ({ isTeache }) => {
   const classes = useStyles()
   const { courseId } = useParams()
   const quizzesInfo = useQuery(ALL_QUIZZES, {
@@ -54,7 +54,9 @@ const Quiz = () => {
             </Typography>
               <List className={classes.list}>
               {
-                quizzes.map(quiz => <QuizListItem key={quiz.id} quiz={quiz} />)
+                quizzes.map(quiz => (
+                  <QuizListItem key={quiz.id} quiz={quiz} isTeache={isTeache} />
+                ))
               }
             </List>
           </>

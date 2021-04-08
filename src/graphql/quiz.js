@@ -7,6 +7,7 @@ export const ALL_QUIZZES = gql`
       quizzes {
         id
         title
+        pass
         dueDate
       }
     }
@@ -41,6 +42,19 @@ export const COURSE_ADD_QUIZ = gql`
       course {
         id
       }
+    }
+  }
+`
+
+export const SUBMIT_QUIZ = gql`
+  mutation ($input: SubmitAnswerInput!) {
+    submitAnswer(
+      input: $input
+    ) {
+      course {
+        id
+      }
+      grade
     }
   }
 `

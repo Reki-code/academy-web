@@ -34,7 +34,9 @@ const Course = () => {
             <Overview isTeache={isTeache} />
           </Route>
           <Route path={`${match.path}/question`} component={QuestionList} />
-          <Route path={`${match.path}/quiz`} component={QuizList} />
+          <Route path={`${match.path}/quiz`}>
+            <QuizList isTeache={isTeache} />
+          </Route>
           <Route path={`${match.path}/mate`} component={MateList} />
         </Switch>
       </>

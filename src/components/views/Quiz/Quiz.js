@@ -3,12 +3,15 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Pagination from '@material-ui/lab/Pagination'
 import Button from '@material-ui/core/Button'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { QUIZ_INFO } from '../../../graphql/quiz'
 import Loading from '../../common/Loading'
 import Error from  '../../common/Error'
 import Question from './Question/Question'
+import { useMutation } from '@apollo/client'
+import { SUBMIT_QUIZ } from '../../../graphql/quiz'
+import Result from './Result/Result'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +53,14 @@ const Quiz = () => {
     newAnswers.splice(index, 1, answer)
     setAnswers(newAnswers)
   }
+  const [submitQuiz] = useMutation(SUBMIT_QUIZ)
+  const [open, setOpen] = useState(false)
+  const history = useHistory()
+  const handleClose = () => {
+    setOpen(false)
+    history.goBack()
+  }
+  const [grade, setGrade] = useState(0)
 
   if (quizInfo.loading) return <Loading />
   if (quizInfo.error) return <Error error={quizInfo.error} />
@@ -58,7 +69,19 @@ const Quiz = () => {
   const questions = quiz.questions
   const total = questions.length
   const handleSubmit = () => {
-    console.log(answers)
+    submitQuiz({
+      variables: { input: {
+        quizId,
+        answers,
+      }}
+    })
+      .then(({data}) => {
+        setGrade(data.submitAnswer.grade)
+        setOpen(true)
+      })
+      .catch(error => {
+        console.log('error', error)
+      })
   }
 
   return (
@@ -90,6 +113,7 @@ const Quiz = () => {
           total === answers.length && <Button onClick={handleSubmit}>提交</Button>
         }
       </div>
+      <Result open={open} handleClose={handleClose} grade={grade} />
     </div>
   )
 }
