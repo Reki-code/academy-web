@@ -62,7 +62,6 @@ const UserPage = () => {
     setNewCourse(false)
   }
   const handleNew = () => {
-    console.log('new course')
     setNewCourse(true)
   }
 

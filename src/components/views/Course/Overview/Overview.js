@@ -10,6 +10,7 @@ import Error from '../../../common/Error'
 import Fab from '../../../common/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import Typography from '@material-ui/core/Typography'
+import NewTopic from './NewTopic/NewTopic'
 
 const useStyles = makeStyles((theme) => ({
   res: {
@@ -27,14 +28,17 @@ const Overview = ({ isTeache }) => {
   const handleChange = (e, newValue) => {
     setTopic(newValue)
   }
+  const [open, setOpen] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   if (resourcesInfo.loading) return <Loading />
   if (resourcesInfo.error) return <Error error={resourcesInfo.error} />
 
   const topics = resourcesInfo.data.course.topics
-
   const handleAdd = () => {
-    console.log('add')
+    setOpen(true)
   }
 
   return (
@@ -56,10 +60,18 @@ const Overview = ({ isTeache }) => {
           </>
       }
       {
-        isTeache && <Fab onClick={handleAdd}>
-          <AddIcon />
-          添加主题
-        </Fab>
+        isTeache && (
+        <>
+          <Fab onClick={handleAdd}>
+            <AddIcon />
+            添加主题
+          </Fab>
+          <NewTopic
+            open={open}
+            handleClose={handleClose}
+            courseId={courseId}
+          />
+        </>)
       }
     </div>
   )

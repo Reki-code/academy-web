@@ -28,3 +28,13 @@ export const RESOURCE_INFO = gql`
     }
   }
 `
+
+export const COURSE_ADD_TOPIC = gql`
+  mutation ($input: CourseAddTopicInput!) {
+    courseAddTopic(input: $input) {
+      course {
+        id
+      }
+    }
+  }
+`
