@@ -81,23 +81,30 @@ const UserPage = () => {
               onChange={handleChange}
             >
               <MenuItem value={10}>全部</MenuItem>
-              <MenuItem value={20}>学习中</MenuItem>
+              <MenuItem value={20}>
+                {type === 'STUDENT' ? '学习中' : '正在教'}
+              </MenuItem>
               <MenuItem value={30}>已学习</MenuItem>
             </Select>
           </FormControl>
         </div>
       </Box>
       <CourseList courses={courses} />
-      <Button
-        variant='contained'
-        color='primary'
-        fullWidth
-        onClick={handleNew}
-      >
-        <ImportContactsIcon style={{ marginRight: 8 }} />
-        开设新的课程
-      </Button>
-      <NewCourse open={newCourse} handleClose={handleCloseNew} />
+      {
+        type === 'TEACHER' &&
+        (<>
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={handleNew}
+          >
+            <ImportContactsIcon style={{ marginRight: 8 }} />
+            开设新的课程
+          </Button>
+          <NewCourse open={newCourse} handleClose={handleCloseNew} />
+        </>)
+      }
     </>
   )
 }

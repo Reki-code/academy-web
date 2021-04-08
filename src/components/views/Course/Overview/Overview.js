@@ -9,6 +9,7 @@ import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
 import Fab from '../../../common/Fab'
 import AddIcon from '@material-ui/icons/Add'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   res: {
@@ -32,11 +33,17 @@ const Overview = ({ isTeache }) => {
 
   const topics = resourcesInfo.data.course.topics
 
+  const handleAdd = () => {
+    console.log('add')
+  }
+
   return (
     <div>
       {
         topics.length === 0
-          ? <div>Empty</div>
+          ? <Typography variant='body1' align='center' color='textSecondary' >
+            没有内容
+          </Typography>
           : <>
             <Nav
               index={topic}
@@ -49,10 +56,10 @@ const Overview = ({ isTeache }) => {
           </>
       }
       {
-        isTeache && <Fab>
-        <AddIcon />
-        添加
-      </Fab>
+        isTeache && <Fab onClick={handleAdd}>
+          <AddIcon />
+          添加主题
+        </Fab>
       }
     </div>
   )
