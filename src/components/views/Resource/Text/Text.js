@@ -1,9 +1,15 @@
 import React from 'react'
+import MUIRichTextEditor from 'mui-rte'
 
 const Text = ({ resource }) => {
   return (
     <div>
-      {resource.content}
+      <MUIRichTextEditor
+        readOnly
+        inheritFontSize
+        controls={[]}
+        defaultValue={resource.content}
+      />
     </div>
   )
 }

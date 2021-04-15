@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Text from './Text/Text'
 import Video from './Video/Video'
+import Slides from './Slides/Slides'
 
 const Resource = () => {
   const { resourceId } = useParams()
@@ -27,6 +28,7 @@ const Resource = () => {
       </Typography>
       {resource.category === 'text' && <Text resource={resource} />}
       {resource.category === 'video' && <Video resource={resource} />}
+      {resource.category === 'slides' && <Slides resource={resource} />}
     </Box>
   )
 }
