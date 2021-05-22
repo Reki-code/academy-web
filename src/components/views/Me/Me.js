@@ -63,7 +63,8 @@ const Me = () => {
               </Grid>
               <Grid item>
                 <Typography variant='body2' >
-                  学号{info.username}
+                  <span>{info.type === 'STUDENT' ? '学号' : '工号'}: </span>
+                  <span>{info.username}</span>
                  </Typography>
               </Grid>
             </Grid>
