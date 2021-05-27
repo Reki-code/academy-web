@@ -61,11 +61,15 @@ const Quiz = ({ isTeache }) => {
             </List>
           </>
       }
-      <Fab onClick={handleAdd}>
-        <AddIcon />
-        添加作业
-      </Fab>
-      <NewQuiz open={open} handleClose={handleClose} courseId={courseId} />
+      {
+        isTeache && <>
+            <Fab onClick={handleAdd}>
+              <AddIcon />
+              <span>添加作业</span>
+            </Fab>
+          <NewQuiz open={open} handleClose={handleClose} courseId={courseId} />
+        </>
+      }
     </>
   )
 }
