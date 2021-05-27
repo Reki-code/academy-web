@@ -14,12 +14,14 @@ import RateReviewIcon from '@material-ui/icons/RateReview'
 import Avatar from '@material-ui/core/Avatar'
 import { useQuery, useMutation } from '@apollo/client'
 import { QUESTION, ADD_ANSWER } from '../../../graphql/question'
-import { FAVORITE, ALL_FAVORITES } from '../../../graphql/favorite'
+import { FAVORITE_QUESTION, ALL_FAVORITES } from '../../../graphql/favorite'
 import timeago from '../../../utils/timeago'
 import AnswerList from './AnswerList'
 import MUIRichTextEditor from 'mui-rte'
 import InputDialog from './InputDialog'
 import { useSnackbar } from 'notistack'
+import Loading from '../../common/Loading'
+import Error from '../../common/Error'
 
 const useStyles = makeStyles((theme) => ({
   row: {
@@ -70,20 +72,25 @@ const Question = () => {
   const questionInfo = useQuery(QUESTION, {
     variables: { questionId }
   })
-  const [favorite] = useMutation(FAVORITE)
+  const [favorite] = useMutation(FAVORITE_QUESTION)
   const { enqueueSnackbar } = useSnackbar()
 
-  if (questionInfo.loading) return <CircularProgress />
-  if (questionInfo.error) return <div>loading failed</div>
+  if (questionInfo.loading) return <Loading />
+  if (questionInfo.error) return <Error error={questionInfo.error} />
 
   const myId = questionInfo.data.me.id
   const question = questionInfo.data.post
   const answers = questionInfo.data.post.answers
 
   const handleFavorite = () => {
+    if (question.isFavorite) {
+      enqueueSnackbar('已经在收藏夹里了', {
+        variant: 'info'
+      })
+      return
+    }
     favorite({
       variables: {
-        type: 'question',
         id: questionId,
       },
       refetchQueries: [{ query: ALL_FAVORITES }],

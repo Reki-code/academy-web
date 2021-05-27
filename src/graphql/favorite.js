@@ -38,3 +38,14 @@ export const FAVORITE = gql`
     }
   }
 `
+
+export const FAVORITE_QUESTION = gql`
+  mutation ($id: String) {
+    favorite(input: { type: "questions", id: $id}) {
+      user {
+        id
+        displayName
+      }
+    }
+  }
+`

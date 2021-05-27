@@ -26,6 +26,7 @@ export const QUESTION = gql`
     }
     post(id: $questionId) {
       id
+      isFavorite
       title
       content
       author {
