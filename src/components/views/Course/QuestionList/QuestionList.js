@@ -12,6 +12,8 @@ import Loading from '../../../common/Loading'
 import Error from '../../../common/Error'
 import Fab from '../../../common/Fab'
 import Typography from '@material-ui/core/Typography'
+import SearchBar from 'material-ui-search-bar'
+import Zoom from '@material-ui/core/Zoom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,9 +30,14 @@ const QuestionList = () => {
   const classes = useStyles()
   const { courseId } = useParams()
   const [newDialog, setNewDialog] = useState(false)
+  const [filter, setFilter] = useState('')
+  const [fold, setFold] = useState(false)
   const handleClose = () => {
     setNewDialog(false)
   }
+  const handleFilterChange = (value) => setFilter(value)
+  const handleSearchCancel = () => setFilter('')
+
   const questionsInfo = useQuery(ALL_QESTIONS, {
     variables: { courseId }
   })
@@ -39,6 +46,8 @@ const QuestionList = () => {
   if (questionsInfo.error) return <Error error={questionsInfo.error} />
 
   const questions = questionsInfo.data?.course.questions
+  const filtedQuestions = questions
+    .filter(q => q.title.includes(filter))
   const handleNew = () => {
     setNewDialog(true)
   }
@@ -50,17 +59,27 @@ const QuestionList = () => {
           ? <Typography variant='body1' align='center' color='textSecondary' >
             暂时没有人提问
           </Typography>
-          : <List>
-            {
-              questions
-                .map(question =>
-                  <Fragment key={question.id}>
-                    <QuestionItem question={question} />
-                    <Divider />
-                  </Fragment>
-                )
-            }
-          </List>
+          : <>
+            <Zoom in={!fold}>
+              <SearchBar
+                placeholder='搜索...'
+                value={filter}
+                onChange={handleFilterChange}
+                onCancelSearch={handleSearchCancel}
+              />
+            </Zoom>
+            <List>
+              {
+                filtedQuestions
+                  .map(question =>
+                    <Fragment key={question.id}>
+                      <QuestionItem question={question} />
+                      <Divider />
+                    </Fragment>
+                  )
+              }
+            </List>
+          </>
       }
       <Fab onClick={handleNew}>
         <EditIcon />
