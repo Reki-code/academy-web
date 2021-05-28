@@ -44,7 +44,16 @@ export const FAVORITE_QUESTION = gql`
     favorite(input: { type: "questions", id: $id}) {
       user {
         id
-        displayName
+      }
+    }
+  }
+`
+
+export const UNFAVORITE_QUESTION = gql`
+  mutation ($id: String) {
+    unFavorite(input: { type: "questions", id: $id}) {
+      user {
+        id
       }
     }
   }

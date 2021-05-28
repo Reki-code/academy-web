@@ -6,15 +6,19 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import StarIcon from '@material-ui/icons/Star'
 import StarOutlineIcon from '@material-ui/icons/StarOutline'
 import RateReviewIcon from '@material-ui/icons/RateReview'
+import ToggleIcon from 'material-ui-toggle-icon'
 import Avatar from '@material-ui/core/Avatar'
 import { useQuery, useMutation } from '@apollo/client'
 import { QUESTION, ADD_ANSWER } from '../../../graphql/question'
-import { FAVORITE_QUESTION, ALL_FAVORITES } from '../../../graphql/favorite'
+import {
+  FAVORITE_QUESTION, UNFAVORITE_QUESTION, ALL_FAVORITES
+} from '../../../graphql/favorite'
 import timeago from '../../../utils/timeago'
 import AnswerList from './AnswerList'
 import MUIRichTextEditor from 'mui-rte'
@@ -73,6 +77,7 @@ const Question = () => {
     variables: { questionId }
   })
   const [favorite] = useMutation(FAVORITE_QUESTION)
+  const [unFavorite] = useMutation(UNFAVORITE_QUESTION)
   const { enqueueSnackbar } = useSnackbar()
 
   if (questionInfo.loading) return <Loading />
@@ -82,18 +87,35 @@ const Question = () => {
   const question = questionInfo.data.post
   const answers = questionInfo.data.post.answers
 
+  const handleUnFavorite = () => {
+    unFavorite({
+      variables: {
+        id: questionId,
+      },
+      refetchQueries: [{ query: ALL_FAVORITES }, { query: QUESTION, variables: { questionId } }],
+    })
+      .then(() => {
+        enqueueSnackbar('取消收藏', {
+          variant: 'success'
+        })
+      })
+      .catch(error => {
+        enqueueSnackbar('操作失败', {
+          variant: 'error'
+        })
+        console.error({ error })
+      })
+  }
   const handleFavorite = () => {
     if (question.isFavorite) {
-      enqueueSnackbar('已经在收藏夹里了', {
-        variant: 'info'
-      })
+      handleUnFavorite()
       return
     }
     favorite({
       variables: {
         id: questionId,
       },
-      refetchQueries: [{ query: ALL_FAVORITES }],
+      refetchQueries: [{ query: ALL_FAVORITES }, { query: QUESTION, variables: { questionId } }],
     })
       .then(() => {
         enqueueSnackbar('收藏成功', {
@@ -158,12 +180,15 @@ const Question = () => {
               回答
             </Button>
           </div>
-          <Button
+          <IconButton
             onClick={handleFavorite}
           >
-            <StarIcon fontSize='small' />
-            收藏
-          </Button>
+            <ToggleIcon
+              on={question.isFavorite}
+              onIcon={<StarIcon fontSize='small' />}
+              offIcon={<StarOutlineIcon fontSize='small' />}
+            />            
+          </IconButton>
         </div>
       </div>
       <Divider />
