@@ -45,7 +45,7 @@ const QuizListItem = ({ quiz, isTeache }) => {
             <>
               <div className={classes.flex}>
                 <div>{quiz.title}</div>
-                { !isTeache && <div>{quiz.pass * 100}%</div> }
+                {!isTeache && <div>{quiz.pass < 0 ? '未通过' : `${ quiz.pass * 100 } %`}</div> }
               </div>
               <Typography className={classes.weight} align='right' variant='body2'>权重5%</Typography>
               <Divider />
