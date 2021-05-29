@@ -11,6 +11,8 @@ import { useQuery } from '@apollo/client'
 import { OPEN_COURSE } from '../../../graphql/course'
 import Loading from '../../common/Loading'
 import Error from '../../common/Error'
+import SearchBar from 'material-ui-search-bar'
+import Zoom from '@material-ui/core/Zoom'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -39,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
 const CollegePage = () => {
   const classes = useStyles()
   const [order, setOrder] = useState(10)
+  const [filter, setFilter] = useState('')
+  const handleFilterChange = (value) => setFilter(value)
+  const handleSearchCancel = () => setFilter('')
   const openCourses = useQuery(OPEN_COURSE)
 
   const handleChange = (event) => {
@@ -48,13 +53,16 @@ const CollegePage = () => {
   const courseList = () => {
     if (openCourses.loading) return <Loading />
     if (openCourses.error) return <Error error={openCourses.error} />
+
     const courses = openCourses.data.courses
+    const filtedCourses = courses.filter(c => c.title.includes(filter))
+    console.log({filtedCourses})
     if (order === 20) {
-      return <CourseList courses={courses.slice().
+      return <CourseList courses={filtedCourses.slice().
         sort((a, b) => (a.countEnrolled >= b.countEnrolled)
       )}/>
     }
-    return <CourseList courses={courses} />
+    return <CourseList courses={filtedCourses} />
   }
 
   return (
@@ -81,6 +89,14 @@ const CollegePage = () => {
           </FormControl>
         </div>
       </Box>
+      <Zoom in>
+        <SearchBar
+          placeholder='搜索...'
+          value={filter}
+          onChange={handleFilterChange}
+          onCancelSearch={handleSearchCancel}
+        />
+      </Zoom>
       { courseList() }
     </>
   )
