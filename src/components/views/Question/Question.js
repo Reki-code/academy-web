@@ -8,7 +8,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import ThumbUpOutlineIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import ThumbDownOutlineIcon from '@material-ui/icons/ThumbDownOutlined'
 import StarIcon from '@material-ui/icons/Star'
 import StarOutlineIcon from '@material-ui/icons/StarOutline'
 import RateReviewIcon from '@material-ui/icons/RateReview'
@@ -166,19 +168,29 @@ const Question = () => {
         }
         <div className={classes.row}>
           <div className={classes.stats}>
-            <Button>
-              <ThumbUpIcon fontSize='small' />
-            </Button>
+            <IconButton>
+              <ToggleIcon
+                on={true}
+                onIcon={<ThumbUpIcon fontSize='small' />}
+                offIcon={<ThumbUpOutlineIcon fontSize='small' />}
+              />
+            </IconButton>
             {question.vote}
-            <Button>
-              <ThumbDownIcon fontSize='small' />
-            </Button>
-            <Button
-              onClick={handleAnswer}
-            >
-              <RateReviewIcon fontSize='small' />
-              回答
-            </Button>
+            <IconButton>
+              <ToggleIcon
+                on={true}
+                onIcon={<ThumbDownIcon fontSize='small' />}
+                offIcon={<ThumbDownOutlineIcon fontSize='small' />}
+              />
+            </IconButton>
+            <div>
+              <IconButton
+                onClick={handleAnswer}
+              >
+                <RateReviewIcon fontSize='small' />
+              </IconButton>
+              <span>回答</span>
+            </div>
           </div>
           <IconButton
             onClick={handleFavorite}
