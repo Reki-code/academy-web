@@ -54,9 +54,14 @@ const UserPage = () => {
   const type = coursesInfo.data.me.type
 
   const courses = (() => {
-    return type === 'TEACHER'
-      ? coursesInfo.data.me.courseTeache
-      : coursesInfo.data.me.courseEnrolled
+    if (type === 'STUDENT') {
+      return coursesInfo.data.me.courseEnrolled
+    }
+    if (order === 20) {
+      return coursesInfo.data.me.courseTeache
+    } else if (order === 30) {
+      return coursesInfo.data.me.courseEnrolled
+    }
   })()
   const handleCloseNew = () => {
     setNewCourse(false)
@@ -79,11 +84,10 @@ const UserPage = () => {
               value={order}
               onChange={handleChange}
             >
-              <MenuItem value={10}>全部</MenuItem>
               <MenuItem value={20}>
                 {type === 'STUDENT' ? '学习中' : '正在教'}
               </MenuItem>
-              <MenuItem value={30}>已学习</MenuItem>
+              <MenuItem value={30}>正在学</MenuItem>
             </Select>
           </FormControl>
         </div>
