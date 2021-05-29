@@ -17,7 +17,11 @@ const ResourceItem = ({ resource }) => {
     <>
       <ListItem alignItems='flex-start' onClick={handleClick}>
         <ListItemAvatar>
-          <Avatar />
+          <Avatar>
+            {resource.category === 'text' && '文档'}
+            {resource.category === 'video' && '视屏'}
+            {resource.category === 'slides' && 'ppt'}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={resource.title}
